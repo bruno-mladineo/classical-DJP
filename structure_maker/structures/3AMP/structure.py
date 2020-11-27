@@ -20,7 +20,7 @@ from scipy import sparse
 ####
 #### Input:  ASE atoms object (molecule)
 #### Output: Approximate length of molecule (maximum distance between N and C atoms)
-#### New: Not really the length of the molecule but the distance between the two N atoms = the distance between the connection with the inorganic layers
+#### New: Not really the length of the molecule but the distance between the two N atoms = the distance between the connections with the inorganic layers
 
 def get_molecule_length(mol):           
     N_indices = np.where(mol.symbols == 'N')
