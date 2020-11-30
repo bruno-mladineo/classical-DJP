@@ -66,7 +66,7 @@ ordered = Atoms()
 upper_MA = Atoms()
 bottom_MA = Atoms()
 
-# Factors for lenghtening cell in x and y directions, not used?
+# Factors for lenghtening cell in x and y directions, not used?     # not used.
 
 cell_x_factor = 0.0
 cell_y_factor = 0.0
@@ -93,9 +93,13 @@ n = int(input())
 # for half xy cell length with regards to the bottom layer.
 # This is only relevant if a supercell is picked in the next step.
 
-print('Do you want the cell to be regular or offset? (enter r/o)')
+print('Do you want the cell to be regular or offset? (enter r/o)')  # Is this relevant for a DJP
 
 ro = str(input())
+
+if (ro.lower() != 'r' || ro.lower() != 'o'):
+    print('Invald input, start again.')
+    SystemExit()
 
 if (ro == 'r'):
     reof = 'regular'
@@ -107,6 +111,10 @@ if (ro == 'o'):
 print('Do you want a supercell in the z-direction (2 units)? (enter y/n)')
 
 sup = str(input())
+
+if (sup.lower() != 'y' || sup.lower() != 'n'):
+    print('Invald input, start again.')
+    SystemExit()
 
 if (sup == 'y'):
     super = 'super'
