@@ -89,6 +89,8 @@ print('Enter number of inorganic layers (n):')
 
 n = int(input())
 
+#####       CURENTLY ONLY REGULAR (NO OFFSET) AVAILABLE         #####
+'''
 # We ask the user if he wants the upper layer to be directly above or offset
 # for half xy cell length with regards to the bottom layer.
 # This is only relevant if a supercell is picked in the next step.
@@ -98,14 +100,15 @@ print('Do you want the cell to be regular or offset? (enter r/o)')  # Is this re
 ro = str(input())
 ro = ro.lower()
 
-if (ro != 'r' || ro != 'o'):
-    print('Invald input, start again.')
-    SystemExit()
+if (ro != 'r' and ro != 'o'):
+    sys.exit('Invald input, start again.')
 
 if (ro == 'r'):
     reof = 'regular'
 if (ro == 'o'):
     reof = 'offset'
+'''
+reof = 'regular'  # temporary
 
 # We ask the user if he wants a supercell.
 
@@ -114,9 +117,9 @@ print('Do you want a supercell in the z-direction (2 units)? (enter y/n)')
 sup = str(input())
 sup = sup.lower()
 
-if (sup != 'y' || sup != 'n'):
-    print('Invald input, start again.')
-    SystemExit()
+if (sup != 'y' and sup != 'n'):    
+    sys.exit('Invald input, start again.')
+
 
 if (sup == 'y'):
     super = 'super'
@@ -156,7 +159,8 @@ frame = read(os.environ["INORGANIC_FRAME_DIR"] + cell_type + 'n' + str(n) + '_' 
 
 # The long organic molecule is read from the script argument (e.g. PEA.traj, BZA.traj, ...)
 
-mol = read(str(sys.argv[1]))
+mol = "3AMP.traj"  # temporary
+#mol = read(str(sys.argv[1])) # temporary
 
 # We create lists of indices of different parts of the inorganic template structre
 
@@ -168,7 +172,7 @@ N_indices = np.flatnonzero(symbols == 'N')
 C_indices = np.flatnonzero(symbols == 'C')
 H_indices = np.flatnonzero(symbols == 'H')
 
-organic_indices = np.concatenate((N_indices, C_indices, H_indices))
+organic_indices = np.concatenate((N_indices, C_indices, H_indices)) 
 
 inorganic_indices = np.concatenate((Pb_indices, Br_indices))
 
@@ -198,6 +202,8 @@ MA_counter = 0
 Long=np.empty((0), dtype='int')
 Long_counter = 0
 
+# We separate the MA+ molecule from the rest knowing that they have 8 atoms (CH6N) 
+
 for i in range(n_components):
     molIdx=i
     molIdxs = [ j for j in range(len(component_list)) if component_list[j] == molIdx ]
@@ -210,16 +216,19 @@ for i in range(n_components):
 
 # We have to use if(len(MA) > 0) condition because if n=1 we don't have any MA
 
-if(len(MA) > 0):
-    MA = np.split(MA, MA_counter)
+if(len(MA) > 0): # Alternative suggestion: if(len(MA)): 
+    MA = np.split(MA, MA_counter) # np.split() splits equaly
 
 Long = np.split(Long, Long_counter)
 
-##### Now we find vectors from N to molecule COM for every long molecule
+
+##### Currently only no offset option available so the vector is not neede as it is the z direction. (temporary)
+
+##### Now we find vectors from N to molecule COM (Center Of Mass)for every long molecule
 ##### in the template structure. Also we store N positions.
 
-N_com = np.empty((len(Long), 3))
-N_pos = np.empty((len(Long), 3))
+N_com = np.empty((len(Long), 3)) # array of vectors
+N_pos = np.empty((len(Long), 3)) # array of positions
 counter = 0 #this counter just counts on which long molecule we are
 
 for long in Long:
@@ -233,9 +242,44 @@ for long in Long:
 
 N_com = normalized(N_com) #we need just the unit vector
 
+##### Now we find the pairs of N atoms to anker
+##### Conditions for pair: one above the other (same x and y), 
+##### First's vector points up (z>0) and the others points down (z<0)
+##### The distance of wanted pair (z1-z2) is positive and minimum 
+
+potential_N_pairs = np.array([0, 0])
+N_pairs = np.empty((0), dtype = 'int')
+N_pair_counter = 0
+
+print('There are {} N atoms'.format(len(N_pos)))
+
+for i in range(0, len(N_pos)):
+    pair_found = 0
+    distance = np.inf # neki veliki broj koji je veci od udaljenosti dva sloja
+    for j in range(0, len(N_pos)):
+        if (i != j and N_pos[i][0] == N_pos[j][0] and N_pos[i][1] == N_pos[j][1]):
+            print('1st check, (i,j) = ({}, {})'.format(i, j))
+            print(N_com[i][2], N_com[j][2])
+            if(N_com[i][2] > 0 and N_com[j][2] < 0):
+                print('2nd check, (i,j) = ({}, {})'.format(i, j))
+                if (N_pos[j][2] - N_pos[i][2] > 0 and N_pos[j][2] - N_pos[i][2] < distance):
+                    print('3rd check, (i,j) = ({}, {})'.format(i, j))
+                    distance = N_pos[j][2] - N_pos[i][2]
+                    pair_found = 1
+                    pair = (i, j)
+                    N_pair_counter +=1
+    if (pair_found):
+        N_pairs = np.append(N_pairs, (i, j))
+
+if(N_pair_counter):
+    N_pairs = np.split(N_pairs, N_pair_counter)
+else:
+    sys.exit('No pairs found.')
+    
+    
 ###### Get input molecule (PEA.traj, BZA.traj., ...) N-COM vector
 
-N_mol_index = mol[mol.symbols == 'N'][0].index
+N_mol_indices = mol[mol.symbols == 'N'][0].index2
 N_mol_pos = mol[N_mol_index].position
 N_mol_com = mol.get_center_of_mass() - N_mol_pos
 N_mol_com = normalized(N_mol_com)[0]
