@@ -96,8 +96,9 @@ n = int(input())
 print('Do you want the cell to be regular or offset? (enter r/o)')  # Is this relevant for a DJP
 
 ro = str(input())
+ro = ro.lower()
 
-if (ro.lower() != 'r' || ro.lower() != 'o'):
+if (ro != 'r' || ro != 'o'):
     print('Invald input, start again.')
     SystemExit()
 
@@ -111,8 +112,9 @@ if (ro == 'o'):
 print('Do you want a supercell in the z-direction (2 units)? (enter y/n)')
 
 sup = str(input())
+sup = sup.lower()
 
-if (sup.lower() != 'y' || sup.lower() != 'n'):
+if (sup != 'y' || sup != 'n'):
     print('Invald input, start again.')
     SystemExit()
 
@@ -125,27 +127,27 @@ if (sup == 'n'):
 # Here the cell can be lengthened in the z-direction. Otherwise the length will be
 # just the difference between the z coordinates of the lowest and highest atoms.
 
-print('Enter additive factor for lengthening the cell in z-direction [0.0]:')
+print('Enter additive factor for lengthening the cell in z-direction [default = 0.0]:')
 
 cell_z_factor = input()
 
 if (len(cell_z_factor) == 0):
     cell_z_factor = float('0.0')
-
-cell_z_factor = float(cell_z_factor)
+else:
+    cell_z_factor = float(cell_z_factor)
 
 # If a supercell is picked, delta_z_factor*molecule_length will be the distance between top and bottom
 # parts of the structure. If the unit cell is chosen, this will be the seperation
 # between bottom 2 and upper 2 long organic molecules.
 
-print('Enter inorganic layer separation in units of molecule length [2.0]:')
+print('Enter inorganic layer separation in units of molecule length [default = 2.0]:')
 
 delta_z_factor = input()
 
 if (len(delta_z_factor) == 0):
     delta_z_factor = float('2.0')
-
-delta_z_factor = float(delta_z_factor)
+else:
+    delta_z_factor = float(delta_z_factor)
 
 # Depending on the chosen options,
 # template structure is read from the INORGANIC_FRAME_DIR directory
@@ -156,7 +158,7 @@ frame = read(os.environ["INORGANIC_FRAME_DIR"] + cell_type + 'n' + str(n) + '_' 
 
 mol = read(str(sys.argv[1]))
 
-# We create lists of indices of different parts of the template structre
+# We create lists of indices of different parts of the inorganic template structre
 
 symbols = np.asarray(frame.get_chemical_symbols(), dtype='str')
 
