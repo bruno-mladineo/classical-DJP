@@ -221,11 +221,9 @@ if(len(MA) > 0): # Alternative suggestion: if(len(MA)):
 
 Long = np.split(Long, Long_counter)
 
-
-##### Currently only no offset option available so the vector is not neede as it is the z direction. (temporary)
-
-##### Now we find vectors from N to molecule COM (Center Of Mass)for every long molecule
-##### in the template structure. Also we store N positions.
+##### Now we find vectors from N to molecule COM (Center Of Mass) 
+##### for every long molecule in the template structure.
+##### Also we store N positions.
 
 N_com = np.empty((len(Long), 3)) # array of vectors
 N_pos = np.empty((len(Long), 3)) # array of positions
@@ -242,27 +240,20 @@ for long in Long:
 
 N_com = normalized(N_com) #we need just the unit vector
 
-##### Now we find the pairs of N atoms to anker
-##### Conditions for pair: one above the other (same x and y), 
-##### First's vector points up (z>0) and the others points down (z<0)
-##### The distance of wanted pair (z1-z2) is positive and minimum 
+##### Now we find the positions of N atoms to use as an anchor
+##### Conditions for anker: The N atom is on the upper side of the 
+##### inorganic layer -> This means the vector points up (z>0)
 
-potential_N_pairs = np.array([0, 0])
-N_pairs = np.empty((0), dtype = 'int')
-N_pair_counter = 0
+anchor_index = np.empty((0), dtype = 'int')
+anchor_counter = 0
 
 print('There are {} N atoms'.format(len(N_pos)))
 
 for i in range(0, len(N_pos)):
-    pair_found = 0
-    distance = np.inf # neki veliki broj koji je veci od udaljenosti dva sloja
-    for j in range(0, len(N_pos)):
-        if (i != j and N_pos[i][0] == N_pos[j][0] and N_pos[i][1] == N_pos[j][1]):
-            print('1st check, (i,j) = ({}, {})'.format(i, j))
-            print(N_com[i][2], N_com[j][2])
-            if(N_com[i][2] > 0 and N_com[j][2] < 0):
-                print('2nd check, (i,j) = ({}, {})'.format(i, j))
-                if (N_pos[j][2] - N_pos[i][2] > 0 and N_pos[j][2] - N_pos[i][2] < distance):
+    position_upper_found = 0
+    if(N_com[i][2] > 0):
+        print('2nd check, (i,j) = ({}, {})'.format(i, j))
+        if (N_pos[j][2] - N_pos[i][2] > 0 and N_pos[j][2] - N_pos[i][2] < distance):
                     print('3rd check, (i,j) = ({}, {})'.format(i, j))
                     distance = N_pos[j][2] - N_pos[i][2]
                     pair_found = 1
