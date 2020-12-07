@@ -244,30 +244,27 @@ N_com = normalized(N_com) #we need just the unit vector
 ##### Conditions for anker: The N atom is on the upper side of the 
 ##### inorganic layer -> This means the vector points up (z>0)
 
-anchor_index = np.empty((0), dtype = 'int')
-anchor_counter = 0
+anchor_N_index = np.empty((0), dtype = 'int')
+anchor_N_counter = 0
 
 print('There are {} N atoms'.format(len(N_pos)))
 
 for i in range(0, len(N_pos)):
-    position_upper_found = 0
     if(N_com[i][2] > 0):
-        print('2nd check, (i,j) = ({}, {})'.format(i, j))
-        if (N_pos[j][2] - N_pos[i][2] > 0 and N_pos[j][2] - N_pos[i][2] < distance):
-                    print('3rd check, (i,j) = ({}, {})'.format(i, j))
-                    distance = N_pos[j][2] - N_pos[i][2]
-                    pair_found = 1
-                    pair = (i, j)
-                    N_pair_counter +=1
-    if (pair_found):
-        N_pairs = np.append(N_pairs, (i, j))
+        print('1st check, (i) = ({})'.format(i))
+        anchor_N_index = np.append(anchor_N_index, [i], axis = 0)
+        anchor_N_counter += 1
 
-if(N_pair_counter):
-    N_pairs = np.split(N_pairs, N_pair_counter)
+print(anchor_N_index)
+
+if(anchor_N_counter):
+    anchor_N_index = np.split(anchor_N_index, anchor_N_counter)
 else:
-    sys.exit('No pairs found.')
+    sys.exit('No anchor sites found.')
     
-    
+print(anchor_N_index)
+
+
 ###### Get input molecule (PEA.traj, BZA.traj., ...) N-COM vector
 
 N_mol_indices = mol[mol.symbols == 'N'][0].index2
