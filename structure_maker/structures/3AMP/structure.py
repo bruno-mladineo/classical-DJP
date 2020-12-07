@@ -20,13 +20,14 @@ from scipy import sparse
 ####
 #### Input:  ASE atoms object (molecule)
 #### Output: Approximate length of molecule (maximum distance between N and C atoms)
-#### New: Not really the length of the molecule but the distance between the two N atoms = the distance between the connections with the inorganic layers
+#### New: Not really the length of the molecule but the distance between the two N 
+#### atoms = the distance between the connections with the inorganic layers
 
 def get_molecule_length(mol):           
     N_indices = np.where(mol.symbols == 'N')
 #    C_indices = np.where(mol.symbols == 'C')
     
-    length = mol.get_distances(N_indices[0], N_indices[1])
+    length = mol.get_distances(N_indices[0][0], N_indices[0][1])
     
     return length
 
@@ -89,7 +90,7 @@ print('Enter number of inorganic layers (n):')
 
 n = int(input())
 
-#####       CURENTLY ONLY REGULAR (NO OFFSET) AVAILABLE         #####
+#####       CURENTLY ONLY REGULAR (NO OFFSET) AVAILABLE!         #####
 '''
 # We ask the user if he wants the upper layer to be directly above or offset
 # for half xy cell length with regards to the bottom layer.
@@ -141,14 +142,15 @@ else:
 
 # If a supercell is picked, delta_z_factor*molecule_length will be the distance between top and bottom
 # parts of the structure. If the unit cell is chosen, this will be the seperation
-# between bottom 2 and upper 2 long organic molecules.
+# between bottom 2 and upper 2 long organic molecules. ??? last sentence is confusing
 
-print('Enter inorganic layer separation in units of molecule length [default = 2.0]:')
+print('Enter inorganic layer separation in units of molecule length [default = 1.0]:') 
+# Maybe replace molecule lenght with molecule z_lenght once rotated align anchors
 
 delta_z_factor = input()
 
 if (len(delta_z_factor) == 0):
-    delta_z_factor = float('2.0')
+    delta_z_factor = float('1.0')
 else:
     delta_z_factor = float(delta_z_factor)
 
@@ -159,7 +161,7 @@ frame = read(os.environ["INORGANIC_FRAME_DIR"] + cell_type + 'n' + str(n) + '_' 
 
 # The long organic molecule is read from the script argument (e.g. PEA.traj, BZA.traj, ...)
 
-mol = "3AMP.traj"  # temporary
+mol = read('3AMP.traj')  # temporary
 #mol = read(str(sys.argv[1])) # temporary
 
 # We create lists of indices of different parts of the inorganic template structre
@@ -208,9 +210,11 @@ for i in range(n_components):
     molIdx=i
     molIdxs = [ j for j in range(len(component_list)) if component_list[j] == molIdx ]
     if(len(molIdxs) == 8):
+        # Not happy with this, what if the long molecula also has 8 atoms?
+        # Maybe check if chemichal symbols == CH6N ? 
         MA = np.append(MA, molIdxs, axis=0)
         MA_counter += 1
-    if(len(molIdxs) > 8):
+    if(len(molIdxs) > 8):   # What if long is less than 8 atoms? Not lightly but still
         Long = np.append(Long, molIdxs, axis=0)
         Long_counter += 1
 
@@ -240,6 +244,7 @@ for long in Long:
 
 N_com = normalized(N_com) #we need just the unit vector
 
+
 ##### Now we find the positions of N atoms to use as an anchor
 ##### Conditions for anker: The N atom is on the upper side of the 
 ##### inorganic layer -> This means the vector points up (z>0)
@@ -247,30 +252,28 @@ N_com = normalized(N_com) #we need just the unit vector
 anchor_N_index = np.empty((0), dtype = 'int')
 anchor_N_counter = 0
 
-print('There are {} N atoms'.format(len(N_pos)))
 
 for i in range(0, len(N_pos)):
     if(N_com[i][2] > 0):
-        print('1st check, (i) = ({})'.format(i))
         anchor_N_index = np.append(anchor_N_index, [i], axis = 0)
         anchor_N_counter += 1
-
-print(anchor_N_index)
 
 if(anchor_N_counter):
     anchor_N_index = np.split(anchor_N_index, anchor_N_counter)
 else:
     sys.exit('No anchor sites found.')
-    
-print(anchor_N_index)
 
+###### Get the input input molecule (3AMP.traj ...) vector pointing from the first
+###### N atom to the secon N atom, whitch first and whitch is second is irrelevant
 
-###### Get input molecule (PEA.traj, BZA.traj., ...) N-COM vector
-
-N_mol_indices = mol[mol.symbols == 'N'][0].index2
-N_mol_pos = mol[N_mol_index].position
-N_mol_com = mol.get_center_of_mass() - N_mol_pos
-N_mol_com = normalized(N_mol_com)[0]
+mol_symbols = np.asarray(mol.get_chemical_symbols(), dtype='str')
+N_mol_indices = np.flatnonzero(mol_symbols == 'N')
+N_mol_pos_first = mol[N_mol_indices[0]].position
+N_mol_pos_second = mol[N_mol_indices[1]].position 
+print(N_mol_indices)
+N_mol_vector = N_mol_pos_second - N_mol_pos_first
+N_mol_vector = normalized(N_mol_vector)[0]
+print('N_mol_vector: ', N_mol_vector)
 
 ###### Now we separate the inorganic frame from the template into top and bottom parts
 ###### so we can easily increase/decrease the distance between them to accomodate the
@@ -286,8 +289,9 @@ inorganic_bottom = inorganic[np.where(inorganic_z <= average_z)[0]]
 
 # The following warning can be ignored in the case of unit cell.
 
-if(len(inorganic_upper) != len(inorganic_bottom)):
-    print('Warning: different number of atoms in inorganic top and bottom parts, is this expected?')
+if ( super == 'super'):
+    if(len(inorganic_upper) != len(inorganic_bottom)):
+        print('Warning: different number of atoms in inorganic top and bottom parts, is this expected?')
 
 inorganic_upper_z = inorganic_upper.get_positions()[:,2]
 inorganic_bottom_z = inorganic_bottom.get_positions()[:,2]
@@ -323,9 +327,10 @@ inorganic_all = inorganic_bottom + inorganic_upper
 ##### Since we moved the upper inorganic frame, now we check which MA's from the template
 ##### belong to the upper and bottom parts so we can adjust their positions accordingly.
 
-if(n > 1):
+if(n > 1):  # Reminder, n is the number of inorganic layers
     for i in range(len(MA)):
         
+        # MA[i] is an array of indices of the atoms making up the MA molecule
         MA_comz = organic[MA[i]].get_center_of_mass()[2]
         
         if(MA_comz < average_z):
@@ -340,7 +345,7 @@ if(n > 1):
 if(len(upper_MA) != len(bottom_MA)):
     print('Warning: different number of atoms in bottom and upper MA. Is this expected?')
 
-##### Now we find rotation matrices between N_com and N_mol_com vectors and apply them to
+##### Now we find rotation matrices between N_com and N_mol_vector vectors and apply them to
 ##### mol positions. We get the list "new_mol_positions" which is a list of rotated
 ##### mol positions. This way, we get a set of positions for the input molecule
 ##### (PEA.traj, BZA.traj, ...) such that the reoriented N-COM vectors are the same
@@ -356,7 +361,7 @@ new_mol_positions = np.empty((len(N_com), len(mol), 3))
 
 for i in range(len(N_com)):
     
-    R = get_rotation_matrix(N_mol_com, N_com[i])
+    R = get_rotation_matrix(N_mol_vector, N_com[i])
     
     for j in range(len(mol)):
         new_mol_positions[i][j] = np.matmul(R, mol.get_positions()[j])
