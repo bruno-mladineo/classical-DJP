@@ -289,7 +289,7 @@ inorganic_bottom = inorganic[np.where(inorganic_z <= average_z)[0]]
 
 # The following warning can be ignored in the case of unit cell.
 
-if ( super == 'super'):
+if (super == 'super'):
     if(len(inorganic_upper) != len(inorganic_bottom)):
         print('Warning: different number of atoms in inorganic top and bottom parts, is this expected?')
 
@@ -342,8 +342,9 @@ if(n > 1):  # Reminder, n is the number of inorganic layers
 
 # The following warning can be ignored in the case of unit cell.
 
-if(len(upper_MA) != len(bottom_MA)):
-    print('Warning: different number of atoms in bottom and upper MA. Is this expected?')
+if (super == 'super'):
+    if(len(upper_MA) != len(bottom_MA)):
+        print('Warning: different number of atoms in bottom and upper MA. Is this expected?')
 
 ##### Now we find rotation matrices between N_com and N_mol_vector vectors and apply them to
 ##### mol positions. We get the list "new_mol_positions" which is a list of rotated
