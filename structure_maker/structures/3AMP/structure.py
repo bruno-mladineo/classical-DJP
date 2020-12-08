@@ -242,7 +242,7 @@ for long in Long:
     N_com[counter] = organic[long].get_center_of_mass() - N_position
     counter += 1
 
-N_com = normalized(N_com) #we need just the unit vector
+N_com = normalized(N_com) #we need just the unit vectors
 
 
 ##### Now we find the positions of N atoms to use as an anchor
@@ -346,6 +346,20 @@ if (super == 'super'):
     if(len(upper_MA) != len(bottom_MA)):
         print('Warning: different number of atoms in bottom and upper MA. Is this expected?')
 
+##### Here we find the vector pointing from the position the molecule anchors on the
+##### bottom inorganic layer to the anchor point on the upper inrganic layer.
+##### If there is no offset the vector is in the z direction, if not then than the 
+##### upper inorganic layer is offset by 1/2*unit cell lenght in x and also in y
+##### direction.  
+
+##### Temporary. Add the offset version #####
+
+desired_direction = np.zeros(3)
+
+if (reof == 'regular'):
+    desired_direction[2] = 1.
+
+##### OLD
 ##### Now we find rotation matrices between N_com and N_mol_vector vectors and apply them to
 ##### mol positions. We get the list "new_mol_positions" which is a list of rotated
 ##### mol positions. This way, we get a set of positions for the input molecule
@@ -354,18 +368,29 @@ if (super == 'super'):
 ##### "new_mol_positions" so that the positions of the N atoms will be the same as
 ##### in the template structure.
 
+##### NEW
+##### Here we find the rotation matrices between the desired_direction and the 
+##### N_mol_vector, then we apply them to the positions of atoms that make up mol.
+##### We make the list "new_mol_positions" which is a list of rotated mol atom 
+##### positions. This way, we get a set of positions for the input molecule
+##### (3AMP.traj,  ...) such that the reoriented N_mol_vectors are the same
+##### as the desired_direction. Later on, we will translate these
+##### "new_mol_positions" so that the positions of the N atoms will be the same as
+##### in the template structure.
+
+
 #we store the original positions for later
 original = mol.get_positions()
-
+print('Original: ', original)
 #empty list for the rotated positions
-new_mol_positions = np.empty((len(N_com), len(mol), 3))
+new_mol_positions = np.empty((len(mol), 3))
+print('New_mol_positions: ', new_mol_positions)    
+R = get_rotation_matrix(N_mol_vector, desired_direction)
+print('Rotation matrix: ', R)    
+for j in range(len(mol)):
+    new_mol_positions[j] = np.matmul(R, mol.get_positions()[j])
+    print('New_mol_position({}): {}'.format(j, new_mol_positions[j]))
 
-for i in range(len(N_com)):
-    
-    R = get_rotation_matrix(N_mol_vector, N_com[i])
-    
-    for j in range(len(mol)):
-        new_mol_positions[i][j] = np.matmul(R, mol.get_positions()[j])
 
 ##### Writing of the final structure. For later construction of the potential, it is !!!VERY!!! important that
 ##### the atoms are written in the following order:
