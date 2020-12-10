@@ -110,7 +110,7 @@ if (ro == 'o'):
     reof = 'offset'
 '''
 reof = 'regular'  # temporary
-
+ro = 'r'
 # We ask the user if he wants a supercell.
 
 print('Do you want a supercell in the z-direction (2 units)? (enter y/n)')
@@ -270,10 +270,8 @@ mol_symbols = np.asarray(mol.get_chemical_symbols(), dtype='str')
 N_mol_indices = np.flatnonzero(mol_symbols == 'N')
 N_mol_pos_first = mol[N_mol_indices[0]].position
 N_mol_pos_second = mol[N_mol_indices[1]].position 
-print(N_mol_indices)
 N_mol_vector = N_mol_pos_second - N_mol_pos_first
 N_mol_vector = normalized(N_mol_vector)[0]
-print('N_mol_vector: ', N_mol_vector)
 
 ###### Now we separate the inorganic frame from the template into top and bottom parts
 ###### so we can easily increase/decrease the distance between them to accomodate the
@@ -380,39 +378,47 @@ if (reof == 'regular'):
 
 
 #we store the original positions for later
+
 original = mol.get_positions()
-print('Original: ', original)
+
 #empty list for the rotated positions
+
 new_mol_positions = np.empty((len(mol), 3))
-print('New_mol_positions: ', new_mol_positions)    
+
+
 R = get_rotation_matrix(N_mol_vector, desired_direction)
-print('Rotation matrix: ', R)    
+
 for j in range(len(mol)):
     new_mol_positions[j] = np.matmul(R, mol.get_positions()[j])
-    print('New_mol_position({}): {}'.format(j, new_mol_positions[j]))
 
-
-##### Writing of the final structure. For later construction of the potential, it is !!!VERY!!! important that
-##### the atoms are written in the following order:
-##### 1) Atoms of long molecule 1, followed by atoms of long molecule 2, etc. The atoms of respective long molecules must always be in the same order for every long molecule!
-##### 2) Atoms of MA molecule 1, followed by atoms of MA molecule 2, etc.. The atoms of respective MA molecules must always be in the same order for every MA molecule!
+##### Writing of the final structure. For later construction of the potential,
+##### it is !!!VERY!!! important that the atoms are written in the following order:
+##### 1) Atoms of long molecule 1, followed by atoms of long molecule 2, etc.
+##### The atoms of respective long molecules must always be in the same order
+##### for every long molecule!
+##### 2) Atoms of MA molecule 1, followed by atoms of MA molecule 2, etc..
+##### The atoms of respective MA molecules must always be in the same order for
+##### every MA molecule!
 ##### 3) Pb atoms
 ##### 4) Br atoms
 
-# We already moved MA's by delta_z, now we have to do it for the N atoms of the long molecules.
-
+# We already moved MA's by delta_z, now we have to do it for the N atoms of
+# the long molecules.
+ 
 if (cell_type == '1'):
-    # In the case of supercell, move top two N positions of the long molecules first because they have to move 2*delta_z.
+    # In the case of supercell, move top two N positions of the long molecules
+    # first because they have to move 2*delta_z once here and once a bit lower.
     top_two = np.argpartition(N_pos[:,2], -2)[-2:]
     for i in top_two:
-        if (sup == 'y'):
-            N_pos[i][2] += delta_z
+        if (sup == 'y'):    
+            N_pos[i][2] += delta_z  
 
 if (cell_type == '2'):
-    # In the case of supercell, move top four N positions of the long molecules first, since they have to move 2*delta_z.
+    # In the case of supercell, move top four N positions of the long molecules
+    # first, since they have to move 2*delta_z.
     top_four = np.argpartition(N_pos[:,2], -4)[-4:]
-    for i in top_four:
-        N_pos[i][2] += delta_z
+    for i in top_four: 
+        N_pos[i][2] += delta_z  
 
 for i in range(len(N_pos)):
     # Now we move the rest of N atoms (all but the lowest ones are moved here).
@@ -420,14 +426,16 @@ for i in range(len(N_pos)):
         if (sup == 'y'):
             N_pos[i][2] += delta_z
     #### In the following lines, we write the input molecules to their new positions.
-    mol.set_positions(new_mol_positions[i])
+    
+for i in anchor_N_index:    
+    mol.set_positions(new_mol_positions)
     # Here the translation is done so the N positions match.
-    translate = N_pos[i] - mol[N_mol_index].position
+    translate = N_pos[i] - mol[N_mol_indices[0]].position
     mol.positions += translate
     # The long molecule is added to the final structure.
     ordered += mol
     # The position of molecule is reset (actually not needed, but not wrong either).
-    mol.set_positions(original)
+    # mol.set_positions(original)
 
 # If n>1, MA's are written now.
 
@@ -439,7 +447,7 @@ if(n > 1):
     for i in range(len(upper_MA)):
         ordered += upper_MA[i]
 
-# The inorganic atoms are written.
+# The inorganic atoms are written. First Pb atoms and then Br atoms
 
 ordered += inorganic_all[inorganic_all.symbols == 'Pb']
 ordered += inorganic_all[inorganic_all.symbols == 'Br']
@@ -467,6 +475,7 @@ ordered.set_cell(frame.get_cell())
 ordered.cell[2][2] = cell_z
 
 # We save the structure in .xyz and .traj format.
+# prefix is the organic molecule we use
 
 prefix = str(sys.argv[1]).split(".")[0]
 
@@ -474,7 +483,7 @@ print('Enter prefix of the name of output file [' + cell_type + 'n' + str(n) + p
 name = input()
 
 if(len(name) == 0):
-    name = cell_type + 'n'  + str(n) + prefix + ro + '_' + super
+    name = cell_type + 'n'  + str(n) + '_' + prefix + '_' + ro + '_' + super
 
 write(name + '.traj', ordered)
 write(name + '.xyz', ordered)
