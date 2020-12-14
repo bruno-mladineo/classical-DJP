@@ -344,23 +344,26 @@ if (reof == 'offset'):
         desired_direction[2] = z
         
         desired_direction = normalized(desired_direction)[0]
-        print('desired_direction: ', desired_direction)
 
         offset_projection_factor = z / molecule_length
-'''        
+
+
     if(cell_type == '1'):
-        x = mol.cell[0][0]/4
-        y = mol.cell[1][1]/4
+        
+        x = 0
+        y = mol.cell[1][1]*(-0.35)  # 0.35 ~ sqrt(2)/4
         z = np.sqrt(molecule_length**2 - x**2 - y**2)
         
         desired_direction[0] = x
         desired_direction[1] = y
         desired_direction[2] = z
         
-        desired_direction = normalized(desired_direction)
-        
+        desired_direction = normalized(desired_direction)[0]
+        print('desired_direction: ', desired_direction)
+
         offset_projection_factor = z / molecule_length
- '''   
+   
+    
 # delta_z tells us how much will we have to adjust the inorganic frame distance.
 
 delta_z = delta_z_factor * molecule_length * offset_projection_factor - inorganic_z_distance
@@ -520,11 +523,11 @@ ordered.cell[2][2] = cell_z
 
 prefix = str(sys.argv[1]).split(".")[0]
 
-print('Enter prefix of the name of output file [' + cell_type + 'n' + str(n) + prefix + ro +'_' + super + ']')
+print('Enter prefix of the name of output file [' + cell_type + 'n' + str(n) + '_' + prefix + '_' + ro +'_' + super + '_' + 'DJP' + ']')
 name = input()
 
 if(len(name) == 0):
-    name = cell_type + 'n'  + str(n) + '_' + prefix + '_' + ro + '_' + super + 'DJP'
+    name = cell_type + 'n'  + str(n) + '_' + prefix + '_' + ro + '_' + super + '_' + 'DJP'
 
 write(name + '.traj', ordered)
 write(name + '.xyz', ordered)
