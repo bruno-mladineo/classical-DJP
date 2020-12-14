@@ -359,7 +359,6 @@ if (reof == 'offset'):
         desired_direction[2] = z
         
         desired_direction = normalized(desired_direction)[0]
-        print('desired_direction: ', desired_direction)
 
         offset_projection_factor = z / molecule_length
    
@@ -427,8 +426,6 @@ original = mol.get_positions()
 #empty list for the rotated positions
 
 new_mol_positions = np.empty((len(mol), 3))
-
-print('N_mol_vector:', N_mol_vector)
 
 R = get_rotation_matrix(N_mol_vector, desired_direction)
 
