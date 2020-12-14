@@ -5,7 +5,7 @@ import sys
 import os
 
 from ase.io import read, write
-from ase.io.trajectory import Trajectory, TrajectoryWriter
+#from ase.io.trajectory import Trajectory, TrajectoryWriter
 from ase import neighborlist
 from ase import Atoms
 from ase.build import sort
@@ -13,21 +13,19 @@ from ase.build import sort
 from scipy import sparse
 
 
-#### The Dion-Jacobson version of the program 
+############ The Dion-Jacobson version of the program ############
 
 
 # Function get_molecule_length(mol):
 ####
 #### Input:  ASE atoms object (molecule)
-#### Output: Approximate length of molecule (maximum distance between N and C atoms)
-#### New: Not really the length of the molecule but the distance between the two N 
-#### atoms = the distance between the connections with the inorganic layers
+#### Output: The distance between the two N atom, in case of regular cell it is
+####         the approximate distance between the inorganic layers
 
 def get_molecule_length(mol):           
-    N_indices = np.where(mol.symbols == 'N')
-#    C_indices = np.where(mol.symbols == 'C')
+    N_indices = np.where(mol.symbols == 'N')    
     
-    length = mol.get_distances(N_indices[0][0], N_indices[0][1])
+    length = mol.get_distances(N_indices[0][0], N_indices[0][1])[0]
     
     return length
 
@@ -67,12 +65,15 @@ ordered = Atoms()
 upper_MA = Atoms()
 bottom_MA = Atoms()
 
+'''
 # Factors for lenghtening cell in x and y directions, not used?     # not used.
 
 cell_x_factor = 0.0
 cell_y_factor = 0.0
+'''
 
-# We ask the user which unit cell type he wants. The x and y lengths of the cell are measured in the units of Pb-Br distance
+# We ask the user which unit cell type he wants. The x and y lengths of the 
+# cell are measured in the units of Pb-Br distance
 ### cell_type = 1 === cell length is sqrt(2)
 ### cell_type = 2 === cell length is 2
 ### TO BE IMPLEMENTED: cell_type = 3 === cell lenth is 1
@@ -84,19 +85,21 @@ print('2 -> 2x2')
 
 cell_type = str(input())
 
+if (cell_type != '1' and cell_type != '2'):
+    sys.exit('Invald input, start again.')
+
 # We ask the users how many inorganic layers he wants.
 
 print('Enter number of inorganic layers (n):')
 
 n = int(input())
 
-#####       CURENTLY ONLY REGULAR (NO OFFSET) AVAILABLE!         #####
-'''
+
 # We ask the user if he wants the upper layer to be directly above or offset
 # for half xy cell length with regards to the bottom layer.
 # This is only relevant if a supercell is picked in the next step.
 
-print('Do you want the cell to be regular or offset? (enter r/o)')  # Is this relevant for a DJP
+print('Do you want the cell to be regular or offset? (enter r/o)')
 
 ro = str(input())
 ro = ro.lower()
@@ -108,9 +111,7 @@ if (ro == 'r'):
     reof = 'regular'
 if (ro == 'o'):
     reof = 'offset'
-'''
-reof = 'regular'  # temporary
-ro = 'r'
+
 # We ask the user if he wants a supercell.
 
 print('Do you want a supercell in the z-direction (2 units)? (enter y/n)')
@@ -128,24 +129,18 @@ if (sup == 'y'):
 if (sup == 'n'):
     super = 'unit'
 
-# Here the cell can be lengthened in the z-direction. Otherwise the length will be
-# just the difference between the z coordinates of the lowest and highest atoms.
+### Old:
+# If a supercell is picked the distance between the top and bottom parts of the structure 
+# will be delta_z_factor*molecule_length. If the unit cell is chosen, this will be the 
+# seperation between the bottom and the upper long organic molecules. 
 
-print('Enter additive factor for lengthening the cell in z-direction [default = 0.0]:')
-
-cell_z_factor = input()
-
-if (len(cell_z_factor) == 0):
-    cell_z_factor = float('0.0')
-else:
-    cell_z_factor = float(cell_z_factor)
-
-# If a supercell is picked, delta_z_factor*molecule_length will be the distance between top and bottom
-# parts of the structure. If the unit cell is chosen, this will be the seperation
-# between bottom 2 and upper 2 long organic molecules. ??? last sentence is confusing
+### New:
+# If a supercell is picked the distance between the top and bottom parts of the structure 
+# will be delta_z_factor*molecule_length*offset_projection_factor 
+# (if regular offset_projection_factor = 1). If the unit cell is chosen, this will be the 
+# seperation between the bottom and the upper long organic molecules. 
 
 print('Enter inorganic layer separation in units of molecule length [default = 1.0]:') 
-# Maybe replace molecule lenght with molecule z_lenght once rotated align anchors
 
 delta_z_factor = input()
 
@@ -153,6 +148,20 @@ if (len(delta_z_factor) == 0):
     delta_z_factor = float('1.0')
 else:
     delta_z_factor = float(delta_z_factor)
+
+# Here the unit cell can be additionally lengthened in the z-direction. 
+# Otherwise the unit cell length will just be the difference between the 
+# z coordinates of the lowest and highest atoms.
+
+# why is this an absolute ammont and not relative cell_z_factor*molecule_length??
+print('Enter the amount by witch you want to lengthen the unit cell in z-direction [default = 0.0]:')
+
+cell_z_factor = input()
+
+if (len(cell_z_factor) == 0):
+    cell_z_factor = float('0.0')
+else:
+    cell_z_factor = float(cell_z_factor)
 
 # Depending on the chosen options,
 # template structure is read from the INORGANIC_FRAME_DIR directory
@@ -210,17 +219,15 @@ for i in range(n_components):
     molIdx=i
     molIdxs = [ j for j in range(len(component_list)) if component_list[j] == molIdx ]
     if(len(molIdxs) == 8):
-        # Not happy with this, what if the long molecula also has 8 atoms?
-        # Maybe check if chemichal symbols == CH6N ? 
         MA = np.append(MA, molIdxs, axis=0)
         MA_counter += 1
-    if(len(molIdxs) > 8):   # What if long is less than 8 atoms? Not lightly but still
+    if(len(molIdxs) > 8):  
         Long = np.append(Long, molIdxs, axis=0)
         Long_counter += 1
 
 # We have to use if(len(MA) > 0) condition because if n=1 we don't have any MA
 
-if(len(MA) > 0): # Alternative suggestion: if(len(MA)): 
+if(len(MA)):
     MA = np.split(MA, MA_counter) # np.split() splits equaly
 
 Long = np.split(Long, Long_counter)
@@ -264,7 +271,7 @@ else:
     sys.exit('No anchor sites found.')
 
 ###### Get the input input molecule (3AMP.traj ...) vector pointing from the first
-###### N atom to the secon N atom, whitch first and whitch is second is irrelevant
+###### N atom to the secon N atom, whitch is first and whitch is second is irrelevant
 
 mol_symbols = np.asarray(mol.get_chemical_symbols(), dtype='str')
 N_mol_indices = np.flatnonzero(mol_symbols == 'N')
@@ -356,7 +363,7 @@ desired_direction = np.zeros(3)
 
 if (reof == 'regular'):
     desired_direction[2] = 1.
-
+    
 ##### OLD
 ##### Now we find rotation matrices between N_com and N_mol_vector vectors and apply them to
 ##### mol positions. We get the list "new_mol_positions" which is a list of rotated
@@ -483,7 +490,7 @@ print('Enter prefix of the name of output file [' + cell_type + 'n' + str(n) + p
 name = input()
 
 if(len(name) == 0):
-    name = cell_type + 'n'  + str(n) + '_' + prefix + '_' + ro + '_' + super
+    name = cell_type + 'n'  + str(n) + '_' + prefix + '_' + ro + '_' + super + 'DJP'
 
 write(name + '.traj', ordered)
 write(name + '.xyz', ordered)
