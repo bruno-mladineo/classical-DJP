@@ -225,10 +225,10 @@ for i in range(n_components):
         Long = np.append(Long, molIdxs, axis=0)
         Long_counter += 1
 
-# We have to use if(len(MA) > 0) condition because if n=1 we don't have any MA
+# We have to use if(len(MA)) condition because if n=1 we don't have any MA
 
 if(len(MA)):
-    MA = np.split(MA, MA_counter) # np.split() splits equaly
+    MA = np.split(MA, MA_counter) # np.split(x, y) splits x into y equal parts
 
 Long = np.split(Long, Long_counter)
 
@@ -270,7 +270,7 @@ if(anchor_N_counter):
 else:
     sys.exit('No anchor sites found.')
 
-###### Get the input input molecule (3AMP.traj ...) vector pointing from the first
+###### Get the vector of the input molecule (3AMP.traj ...) that points from the first
 ###### N atom to the secon N atom, whitch is first and whitch is second is irrelevant
 
 mol_symbols = np.asarray(mol.get_chemical_symbols(), dtype='str')
@@ -306,7 +306,7 @@ inorganic_bottom_z = inorganic_bottom.get_positions()[:,2]
 
 inorganic_z_distance = np.amin(inorganic_upper_z) - np.amax(inorganic_bottom_z)
 
-# If we have unit cell, there will be no upper layer.
+# If we have a unit cell, there will be no upper layer.
 
 if (sup == 'n'):
     inorganic_z_distance = 0
@@ -315,9 +315,55 @@ if (sup == 'n'):
 
 molecule_length = get_molecule_length(mol)
 
+##### Here we find the vector pointing from the position of the molecule anchor
+##### on the bottom inorganic layer to the anchor point on the upper inrganic layer.
+##### If there is no offset the vector is in the z direction and the 
+##### offset_projection_factor = 1.0. If there is an offset then the 
+##### upper inorganic layer is translated. In case of 2x2 (type 2) cell by 1/4*unit cell
+##### lenght in x and also in y direction. In cese of type 1 cell by 1/2 unit cell lenght
+##### lenght in x direction?? The offset projection factor can be found using the
+##### Pythagorean theorem.
+
+desired_direction = np.zeros(3)
+
+if (reof == 'regular'):
+    
+    desired_direction[2] = 1.
+    offset_projection_factor = 1.
+    
+if (reof == 'offset'):
+    
+    if(cell_type == '2'):
+        
+        x = mol.cell[0][0]/4
+        y = mol.cell[1][1]/4
+        z = np.sqrt(molecule_length**2 - x**2 - y**2)
+
+        desired_direction[0] = x
+        desired_direction[1] = y
+        desired_direction[2] = z
+        
+        desired_direction = normalized(desired_direction)[0]
+        print('desired_direction: ', desired_direction)
+
+        offset_projection_factor = z / molecule_length
+'''        
+    if(cell_type == '1'):
+        x = mol.cell[0][0]/4
+        y = mol.cell[1][1]/4
+        z = np.sqrt(molecule_length**2 - x**2 - y**2)
+        
+        desired_direction[0] = x
+        desired_direction[1] = y
+        desired_direction[2] = z
+        
+        desired_direction = normalized(desired_direction)
+        
+        offset_projection_factor = z / molecule_length
+ '''   
 # delta_z tells us how much will we have to adjust the inorganic frame distance.
 
-delta_z = delta_z_factor * molecule_length - inorganic_z_distance
+delta_z = delta_z_factor * molecule_length * offset_projection_factor - inorganic_z_distance
 
 # In the case of supercell, the upper layer positions are adjusted by delta_z
 
@@ -332,7 +378,7 @@ inorganic_all = inorganic_bottom + inorganic_upper
 ##### Since we moved the upper inorganic frame, now we check which MA's from the template
 ##### belong to the upper and bottom parts so we can adjust their positions accordingly.
 
-if(n > 1):  # Reminder, n is the number of inorganic layers
+if(n):  # Reminder, n is the number of inorganic layers
     for i in range(len(MA)):
         
         # MA[i] is an array of indices of the atoms making up the MA molecule
@@ -350,19 +396,6 @@ if(n > 1):  # Reminder, n is the number of inorganic layers
 if (super == 'super'):
     if(len(upper_MA) != len(bottom_MA)):
         print('Warning: different number of atoms in bottom and upper MA. Is this expected?')
-
-##### Here we find the vector pointing from the position the molecule anchors on the
-##### bottom inorganic layer to the anchor point on the upper inrganic layer.
-##### If there is no offset the vector is in the z direction, if not then than the 
-##### upper inorganic layer is offset by 1/2*unit cell lenght in x and also in y
-##### direction.  
-
-##### Temporary. Add the offset version #####
-
-desired_direction = np.zeros(3)
-
-if (reof == 'regular'):
-    desired_direction[2] = 1.
     
 ##### OLD
 ##### Now we find rotation matrices between N_com and N_mol_vector vectors and apply them to
@@ -392,6 +425,7 @@ original = mol.get_positions()
 
 new_mol_positions = np.empty((len(mol), 3))
 
+print('N_mol_vector:', N_mol_vector)
 
 R = get_rotation_matrix(N_mol_vector, desired_direction)
 
@@ -446,7 +480,7 @@ for i in anchor_N_index:
 
 # If n>1, MA's are written now.
 
-if(n > 1):
+if(n):
     
     for i in range(len(bottom_MA)):
         ordered += bottom_MA[i]
@@ -468,7 +502,7 @@ top_inorganic_z = np.amax(ordered[(ordered.symbols == 'Pb') | (ordered.symbols =
 top_organic_z = np.amax(ordered[(ordered.symbols == 'N') | (ordered.symbols == 'C') | (ordered.symbols == 'H')].get_positions()[:,2])
 
 if (sup =='y'):
-    cell_z = delta_z_factor * molecule_length + top_inorganic_z - bottom_inorganic_z + cell_z_factor
+    cell_z = delta_z_factor * molecule_length * offset_projection_factor + top_inorganic_z - bottom_inorganic_z + cell_z_factor
 
 if (sup =='n'):
     cell_z = top_organic_z - bottom_inorganic_z + cell_z_factor
