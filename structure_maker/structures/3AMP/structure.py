@@ -13,7 +13,7 @@ from ase.build import sort
 from scipy import sparse
 
 
-############ The Dion-Jacobson version of the program ############
+############# The Dion-Jacobson version of the program #############
 
 
 # Function get_molecule_length(mol):
@@ -66,7 +66,7 @@ upper_MA = Atoms()
 bottom_MA = Atoms()
 
 '''
-# Factors for lenghtening cell in x and y directions, not used?     # not used.
+Factors for lenghtening cell in x and y directions, not used?     # not used.
 
 cell_x_factor = 0.0
 cell_y_factor = 0.0
