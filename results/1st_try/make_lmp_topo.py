@@ -59,7 +59,7 @@ def AverageInorganicZ(atoms, inorganic_indices):
 
 script_dir = os.environ["LAMMPS_SCRIPTS_DIR"]
 
-bash('rsync -av ' + script_dir + ' . --exclude=make_lmp_topo*')
+bash('rsync -av ' + script_dir + ' . --exclude=make_lmp_topo.py')
 
 #update database
 
@@ -69,23 +69,23 @@ database = UpdateDatabase()
 
 #enter prefixes
 
-prefix = 'BA'        #large organic molecule
+prefix = '3AMP'        #large organic molecule
 small_prefix = 'MA'  #small organic molecule
 
 # Chemical unit info
 
 N = 1          #number of inorganic layers
 
-N_A = 2        #number of large organic spacers (BA, PEA, ...)
+N_A = 1        #number of large organic spacers (BA, PEA, ...)
 N_B = N-1      #number of smaller organic spacers (MA, FA)
 N_Pb = N       #number of lead atoms
 N_Br = 3*N+1   #number of bromide atoms
 
 # Large organic molecule info (BA)
 
-N_C = 4
-N_H = 12
-N_N = 1
+N_C = 5
+N_H = 16
+N_N = 2
 N_MOL = N_C + N_H + N_N
 
 # Smaller organic molecule info (MA)
@@ -482,7 +482,7 @@ else:
     print('Warning: strings "super" or "unit" not found in the name of .xyz file. Assuming supercell in z-direction. This may lead to wrong molecular indexing in LAMMPS file.')
     average_z = AverageInorganicZ(atoms, inorganic_indices)
 
-bash('./molecule_indices.sh ' + str(int(N_chem * N_A)) + ' ' + str(int(N_MOL)) + ' ' + str(int(N_chem * N_B)) + ' ' + str(int(N_mol)) + ' ' + str(int(N_inorganic)) + ' ' + str(average_z) + ' ' + prefix)
+bash('./molecule_indices.sh ' + str(int(N_chem * 2)) + ' ' + str(int(N_MOL)) + ' ' + str(int(N_chem * N_B)) + ' ' + str(int(N_mol)) + ' ' + str(int(N_inorganic)) + ' ' + str(average_z) + ' ' + prefix)
 
 #print('./molecule_indices.sh ' + str(int(N_chem * 2)) + ' ' + str(int(N_MOL)) + ' ' + str(int(N_chem * N_B)) + ' ' + str(int(N_mol)) + ' ' + str(int(N_inorganic)) + ' ' + str(average_z) + ' ' + prefix)
 
@@ -490,7 +490,7 @@ bash('./molecule_indices.sh ' + str(int(N_chem * N_A)) + ' ' + str(int(N_MOL)) +
 
 bash('rm tmp*')
 bash('rm *_info.dat')
-bash('rm amber2lammps.sh amber2lammps.py gaussian*  gaussian_template.com  get_charges.sh  get_mol_info.sh  in_template.file  teran* gaussian_in.com neighbor.py molecule_indices.sh README*')
+bash('rm amber2lammps.sh amber2lammps.py gaussian.sh  gaussian_template.com  get_charges.sh  get_mol_info.sh  in_template.file  teran.sh gaussian_in.com neighbor.py molecule_indices.sh README*')
 #bash('rm -r ' + prefix)
 
 #if (N > 1):

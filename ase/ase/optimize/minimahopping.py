@@ -32,8 +32,12 @@ class MinimaHopping:
         'mdmin': 2,  # criteria to stop MD simulation (no. of minima)
         'logfile': 'hop.log',  # text log
         'minima_threshold': 0.5e-3,  # A, cosine distance threshold for identical configs
+        'ofp_rcut': 10.,  # A, cutoff for neighborlists for OFP comparison
+        'ofp_sigma': 0.1, # A, variance of OFP gaussians
+        'ofp_nsigma': 5,  # number of sigmas after OFP gaussians are cut
+        'ofp_binwidth': 0.05, # binwidth for OFP gaussians discretization
         'timestep': 1.0,  # fs, timestep for MD simulations
-        'optimizer': FIRE,  # local optimizer to use
+        'optimizer': BFGS,  # local optimizer to use
         'minima_traj': 'minima.traj',  # storage file for minima list
         'fmax': 0.05,  # eV/A, max force for cell optimization
         'fmax2': 0.1,  # eV/A, max force for geometry optimization
@@ -68,45 +72,46 @@ class MinimaHopping:
 
         #Oganov fingerprints for structure comparison
         self._comp = OFPComparator(dE=10.0,
-                     cos_dist_max=self._minima_threshold, rcut=20., binwidth=0.05,
-                     pbc=[True, True, True], sigma=0.05, nsigma=4,
+                     cos_dist_max=self._minima_threshold, rcut=self._ofp_rcut, binwidth=self._ofp_binwidth,
+                     pbc=[True, True, True], sigma=self._ofp_sigma, nsigma=self._ofp_nsigma,
                      recalculate=False)
 
-        #inorganic indices and positions for Hookean constraints
-        self._Pb_indices = np.where(self._atoms.symbols == 'Pb')[0]
-        self._Pb_positions = self._atoms.positions[self._Pb_indices]
-        self._Br_indices = np.where(self._atoms.symbols == 'Br')[0]
-        self._Br_positions = self._atoms.positions[self._Br_indices]
-        self._inorganic_indices = np.concatenate((self._Pb_indices, self._Br_indices))
-        self._inorganic_positions = self._atoms.positions[self._inorganic_indices]
-        #make list for distances of Pb atoms and 6 surrounding Br
-#        self._distances_list = np.empty((len(self._Pb_indices), 6))
-        self._indices_list = np.empty((len(self._Pb_indices), 6), dtype='int')
+        if self._constrain_bool == True:
+            #inorganic indices and positions for Hookean constraints
+            self._Pb_indices = np.where(self._atoms.symbols == 'Pb')[0]
+            self._Pb_positions = self._atoms.positions[self._Pb_indices]
+            self._Br_indices = np.where(self._atoms.symbols == 'Br')[0]
+            self._Br_positions = self._atoms.positions[self._Br_indices]
+            self._inorganic_indices = np.concatenate((self._Pb_indices, self._Br_indices))
+            self._inorganic_positions = self._atoms.positions[self._inorganic_indices]
+            #make list for distances of Pb atoms and 6 surrounding Br
+#            self._distances_list = np.empty((len(self._Pb_indices), 6))
+            self._indices_list = np.empty((len(self._Pb_indices), 6), dtype='int')
 
-        for i in range(len(self._Pb_indices)):
-            distances = self._atoms.get_distances(self._Pb_indices[i], self._Br_indices, mic=True)
-#            self._distances_list[i] = distances[np.argsort(distances)[:6]]
-            self._indices_list[i] = self._Br_indices[np.argsort(distances)[:6]]
-
-        #find pairs of 2 Br's closest in z-direction and furthest in z-direction
-        average_Br_z = np.average(self._Br_positions[:,2])
-        top_Br = self._Br_indices[np.where(self._Br_positions[:,2] > average_Br_z)]
-        bottom_Br = self._Br_indices[np.where(self._Br_positions[:,2] < average_Br_z)]
-        #Br groups are labelled 1,2,3,4 from bottom to top so 1-4 and 2-3 should be paired
-        Br_group1 = bottom_Br[np.argsort(self._atoms.positions[bottom_Br][:,2])[:4]]
-        Br_group2 = bottom_Br[np.argsort(self._atoms.positions[bottom_Br][:,2])[-4:]]
-        Br_group3 = top_Br[np.argsort(self._atoms.positions[top_Br][:,2])[:4]]
-        Br_group4 = top_Br[np.argsort(self._atoms.positions[top_Br][:,2])[-4:]]
-
-        self._Br_index1 = int(Br_group1[0])
-        Br_relative1 = self._atoms.positions[self._Br_index1] - self._atoms.positions[Br_group4]
-        self._Br_index4 = int(Br_group4[np.argmin(np.linalg.norm(Br_relative1[:,:2], axis=1))])
-
-        Br_relative2 = self._atoms.positions[self._Br_index1] - self._atoms.positions[Br_group2]
-        self._Br_index2 = int(Br_group2[np.argmin(np.linalg.norm(Br_relative2[:,:2], axis=1))])
-
-        Br_relative3 = self._atoms.positions[self._Br_index2] - self._atoms.positions[Br_group3]
-        self._Br_index3 = int(Br_group3[np.argmin(np.linalg.norm(Br_relative3[:,:2], axis=1))])
+            for i in range(len(self._Pb_indices)):
+                distances = self._atoms.get_distances(self._Pb_indices[i], self._Br_indices, mic=True)
+#                self._distances_list[i] = distances[np.argsort(distances)[:6]]
+                self._indices_list[i] = self._Br_indices[np.argsort(distances)[:6]]
+        
+            #find pairs of 2 Br's closest in z-direction and furthest in z-direction
+            average_Br_z = np.average(self._Br_positions[:,2])
+            top_Br = self._Br_indices[np.where(self._Br_positions[:,2] > average_Br_z)]
+            bottom_Br = self._Br_indices[np.where(self._Br_positions[:,2] < average_Br_z)]
+            #Br groups are labelled 1,2,3,4 from bottom to top so 1-4 and 2-3 should be paired
+            Br_group1 = bottom_Br[np.argsort(self._atoms.positions[bottom_Br][:,2])[:4]]
+            Br_group2 = bottom_Br[np.argsort(self._atoms.positions[bottom_Br][:,2])[-4:]]
+            Br_group3 = top_Br[np.argsort(self._atoms.positions[top_Br][:,2])[:4]]
+            Br_group4 = top_Br[np.argsort(self._atoms.positions[top_Br][:,2])[-4:]]
+            
+            self._Br_index1 = int(Br_group1[0])
+            Br_relative1 = self._atoms.positions[self._Br_index1] - self._atoms.positions[Br_group4]
+            self._Br_index4 = int(Br_group4[np.argmin(np.linalg.norm(Br_relative1[:,:2], axis=1))])
+            
+            Br_relative2 = self._atoms.positions[self._Br_index1] - self._atoms.positions[Br_group2]
+            self._Br_index2 = int(Br_group2[np.argmin(np.linalg.norm(Br_relative2[:,:2], axis=1))])
+            
+            Br_relative3 = self._atoms.positions[self._Br_index2] - self._atoms.positions[Br_group3]
+            self._Br_index3 = int(Br_group3[np.argmin(np.linalg.norm(Br_relative3[:,:2], axis=1))])
 
     def __call__(self, totalsteps=None, maxtemp=None):
         """Run the minima hopping algorithm. Can specify stopping criteria
@@ -131,6 +136,7 @@ class MinimaHopping:
             if self._constrain_bool == True:
                 self._constrain() #added by me
             self._molecular_dynamics()
+            self._check_skew()
             self._optimize(self._fmax)
             self._counter += 1
             self._check_results()
@@ -248,7 +254,7 @@ class MinimaHopping:
         if (self._previous_energy is None or
             (self._atoms.get_potential_energy() <
                 self._previous_energy + self._Ediff)):
-            unique = self._is_unique()
+            unique, cosine_distances = self._is_unique()
             del self._atoms.info['fingerprints']
             if unique:
                         self._log('msg', 'Accepted new minimum.')
@@ -260,13 +266,15 @@ class MinimaHopping:
             if not unique:
                         self._log('msg', 'Rejected minimum because a similar fingerprint was found.')
 
-                        similar_index = self._get_most_similar()
+                        similar_index = np.argmin(cosine_distances)
 
-                        if self._atoms.get_potential_energy() < self._minima_energies[similar_index]:
+                        if similar_index == len(self._minima) - 1 and self._atoms.get_potential_energy() < self._minima_energies[similar_index] and cosine_distances[-2] > self._minima_threshold and similar_index != 0:
                                     self._replace_minimum(similar_index)
-                                    if similar_index == len(self._minima) - 1:
-                                                self._previous_optimum = self._atoms.copy()
-                                                self._previous_energy = self._atoms.get_potential_energy()
+                                    self._previous_optimum = self._atoms.copy()
+                                    self._previous_energy = self._atoms.get_potential_energy()
+
+                        if similar_index == 0:
+                                    self._log('msg', 'Hop step returned to original structure. Resuming...')
 
                         self._atoms.positions = self._previous_optimum.positions
                         self._atoms.cell = self._previous_optimum.cell
@@ -283,14 +291,15 @@ class MinimaHopping:
             self._log('par')
 
     def _is_unique(self):
-            if True in [self._comp.looks_like(self._atoms, min) for min in self._minima]:
-                        return False
-            else:
-                        return True
+            cosine_distances = [self._comp._compare_structure(self._atoms, min) for min in self._minima]
+            cosine_distances_string = ' '.join([str(elem) for elem in [round(elemo, 8) for elemo in cosine_distances]])
 
-    def _get_most_similar(self):
-            index = np.argmin([self._comp._compare_structure(self._atoms, min) for min in self._minima])
-            return index
+            self._log('msg', 'Cosine distances for candidate #%i = %s' % (self._counter - 1, cosine_distances_string))
+
+            if True in [self._comp.looks_like(self._atoms, min) for min in self._minima]:
+                        return False, cosine_distances
+            else:
+                        return True, cosine_distances
 
     def _log(self, cat='msg', message=None):
         """Records the message as a line in the log file."""
@@ -335,6 +344,7 @@ class MinimaHopping:
                               logfile='qn%05i.log' % self._counter)
         self._log('msg', 'Optimization: qn%05i' % self._counter)
         opt.run(fmax=cell_opt_fmax)
+        self._check_skew()
         self._log('ene')
         if self._constrain_bool == True:
             del self._atoms.constraints
@@ -416,6 +426,28 @@ class MinimaHopping:
             oldpositions.append(self._atoms.positions.copy())
         # Reset atoms to minimum point.
         self._atoms.positions = oldpositions[passedmin[0]]
+
+    def _check_skew(self):
+        cell = np.copy(self._atoms.cell.standard_form()[0][:])
+        if(np.abs(cell[2][1]) > 0.5 * cell[1][1] or np.abs(cell[2][0]) > 0.5 * cell[0][0] or np.abs(cell[1][0]) > 0.5 * cell[0][0]):
+            self._log('msg', 'Cell skewed, unskewing.')
+            self._unskew()
+
+    def _unskew(self):
+        self._atoms.set_cell(self._atoms.cell.standard_form()[0], scale_atoms=True)
+        cell = self._atoms.cell[:]
+        for i in range(2, 0, -1):
+            for j in range(1, -1, -1):
+                if (i > j):
+                    while cell[i][j] > 0.5 * cell[j][j]:
+                        cell[i] -= cell[j]
+                    while cell[i][j] < -0.5 * cell[j][j]:
+                        cell[i] += cell[j]
+        self._atoms.set_cell(cell)
+        self._atoms.wrap()
+        tri_mat, coord_transform = convert_cell_4NPT(self._atoms.get_cell())
+        self._atoms.set_positions([np.matmul(coord_transform, position) for position in self._atoms.get_positions()])
+        self._atoms.set_cell(tri_mat.transpose())
 
     def _record_first_minimum(self):
         """Temporary kludge to write first minimum because otherwise it doesn't write its energy..."""

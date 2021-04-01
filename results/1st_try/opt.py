@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import numpy as np
+from numpy.linalg import norm
 
 from ase import Atom, Atoms
 from ase.build import bulk
@@ -18,6 +19,7 @@ from ase.optimize.sciopt import SciPyFminBFGS, SciPyFminCG
 from ase.optimize.minimahopping import MinimaHopping
 from ase.constraints import ExpCellFilter, UnitCellFilter
 from ase.io import read, write
+from ase.calculators.lammpslib import is_upper_triangular
 
 charges = np.loadtxt('charges.dat')
 Z_dict = DICT
@@ -69,7 +71,7 @@ file.close()
 for i in range(0, len(charges)):
     amendments.append('set atom ' + str(int(i+1)) + ' charge ' + str(charges[i]))
 
-lammps = LAMMPSlib(lmpcmds=cmds, lammps_header=header, amendments=amendments, log_file=None, keep_alive=True, create_atoms=False, create_box=False, boundary=False)
+lammps = LAMMPSlib(lmpcmds=cmds, lammps_header=header, amendments=amendments, log_file='asela.log', keep_alive=True, create_atoms=False, create_box=False, boundary=False)
 
 print('Done with reading LAMMPS file.')
 #print(header)
@@ -85,17 +87,23 @@ print('Calculator set!')
 energy_i = atoms.get_potential_energy()
 print('Starting potential energy: ' + str(energy_i))
 
-#opt = FIRE(atoms, trajectory='PREFIX_opt.traj')
+opt = BFGS(atoms, trajectory='PREFIX_opt.traj')
 
-#opt.run(fmax=5e-01)
+opt.run(fmax=5e-01)
 
-#ecf = ExpCellFilter(atoms)
+ecf = ExpCellFilter(atoms)
 
-#qn = FIRE(ecf)
+qn = BFGS(ecf)
 
-#cell_traj = Trajectory('PREFIX_copt.traj', 'w', atoms)
-#qn.attach(cell_traj)
-#qn.run(fmax=0.05)
+cell_traj = Trajectory('PREFIX_copt.traj', 'w', atoms)
+qn.attach(cell_traj)
+qn.run(fmax=0.0005)
+
+#tri_mat, coord_transform = convert_cell2(atoms.get_cell())
+
+#if coord_transform is not None:
+#    atoms.set_positions([np.matmul(coord_transform, position) for position in atoms.get_positions()])
+#    atoms.set_cell(tri_mat.transpose())
 
 #Temp = 300
 #MaxwellBoltzmannDistribution(atoms, temp=Temp*units.kB)
@@ -104,19 +112,17 @@ print('Starting potential energy: ' + str(energy_i))
 #ttime=25*units.fs,pfactor=0.06*75.**2*units.fs**2, trajectory='NPT.traj')
 #npt.run(1000)
 
+ecf2 = ExpCellFilter(atoms)
+
+qn2 = BFGS(ecf)
+
+#cell2_traj = Trajectory('PREFIX_copt2.traj', 'w', atoms)
+#qn2.attach(cell2_traj)
+#qn2.run(fmax=0.001)
+
+#opt2 = BFGS(atoms, trajectory='PREFIX_opt2.traj')
+
+#opt2.run(fmax=0.0005)
+
 energy_f = atoms.get_potential_energy()
 print('Final potential energy: ' + str(energy_f))
-
-#print('Starting global optimization...')
-
-#minimum cell length for OFP cutoff, take away 1A to minimize the chance of capturing periodic images 
-minimum_cell_length = np.min(atoms.get_cell_lengths_and_angles()[:3]) - 1.0
-
-hop = MinimaHopping(atoms, timestep=0.5, Ediff0=1.0, T0=50., optimizer=BFGS, 
-minima_threshold=5.0e-3, ofp_sigma=0.1, ofp_nsigma=5, ofp_rcut=minimum_cell_length,
-fmax=3e-02, fmax2=0.1, initial_fmax=5e-02, 
-mdmin=4000, beta1=1.1, beta2=1.1, beta3=1./1.8, externalstress=0., ttime=25., 
-pfactor=0.06*75.**2, k1=3., rt1=0.01, k2=10., rt2=0.0, constrain_bool = False)
-
-hop(totalsteps=100)
-
