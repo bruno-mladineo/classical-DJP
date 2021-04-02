@@ -152,7 +152,7 @@ if (cell_type == '1' or cell_type == '2'):
     if (al == 'n' or al == ''):
         alter = 'na'
 
-else: alter = 'na'  # is this needed? 
+else: alter = 'na'  # is this needed?  probably not, but it can't hurt
 
 
 ### New:
@@ -530,10 +530,13 @@ for i in range(len(N_pos)):
     if(N_pos[i][2] > average_z):
         if (sup == 'y'):
             N_pos[i][2] += delta_z
-    #### In the following lines, we write the input molecules to their new positions.
-    
-for i in anchor_N_index:    
-    if (i%2 == 0):
+    #### In the following lines, we write the input molecules to their new positions. ###
+
+
+### for cell_type 3 ###
+
+if (cell_type == '3'):
+    for i in anchor_N_index:    
         mol.set_positions(new_mol_positions)
         # Here the translation is done so the N positions match.
         translate = N_pos[i] - mol[N_mol_indices[0]].position
@@ -542,21 +545,64 @@ for i in anchor_N_index:
         ordered += mol
         # The position of molecule is reset 
         mol.set_positions(original)
-    else:
-        mol.set_positions(new_mol_positions_flipped)
-        # Here the translation is done so the N positions match.
-        translate = N_pos[i] - mol[N_mol_indices[0]].position
-        mol.positions += translate
-        # And now we compensate for rotating the molecule in the opposite direction
-        flipp_correction = np.empty(3)
-        flipp_correction[0] = x
-        flipp_correction[1] = y
-        flipp_correction[2] = z
-        mol.positions += flipp_correction
-        # The long molecule is added to the final structure.
-        ordered += mol
-        # The position of molecule is reset 
-        mol.set_positions(original)
+    
+### for cell_type 2 ###
+
+if (cell_type == '2'):
+    for i in anchor_N_index:    
+        if (alter == 'a' and (i%4 == 1 or i%4 == 2)):
+            mol.set_positions(new_mol_positions_flipped)
+            # Here the translation is done so the N positions match.
+            translate = N_pos[i] - mol[N_mol_indices[0]].position
+            mol.positions += translate
+            # And now we compensate for rotating the molecule in the opposite direction
+            flipp_correction = np.empty(3)
+            flipp_correction[0] = x
+            flipp_correction[1] = y
+            flipp_correction[2] = z
+            mol.positions += flipp_correction
+            # The long molecule is added to the final structure.
+            ordered += mol
+            # The position of molecule is reset 
+            mol.set_positions(original)
+        else :
+            mol.set_positions(new_mol_positions)
+            # Here the translation is done so the N positions match.
+            translate = N_pos[i] - mol[N_mol_indices[0]].position
+            mol.positions += translate
+            # The long molecule is added to the final structure.
+            ordered += mol
+            # The position of molecule is reset 
+            mol.set_positions(original)
+
+### for cell_type 1 ###
+
+if (cell_type == '1'):
+    for i in anchor_N_index:    
+        if (alter == 'a' and i%2 == 1):
+            mol.set_positions(new_mol_positions_flipped)
+            # Here the translation is done so the N positions match.
+            translate = N_pos[i] - mol[N_mol_indices[0]].position
+            mol.positions += translate
+            # And now we compensate for rotating the molecule in the opposite direction
+            flipp_correction = np.empty(3)
+            flipp_correction[0] = x
+            flipp_correction[1] = y
+            flipp_correction[2] = z
+            mol.positions += flipp_correction
+            # The long molecule is added to the final structure.
+            ordered += mol
+            # The position of molecule is reset 
+            mol.set_positions(original)
+        else :
+            mol.set_positions(new_mol_positions)
+            # Here the translation is done so the N positions match.
+            translate = N_pos[i] - mol[N_mol_indices[0]].position
+            mol.positions += translate
+            # The long molecule is added to the final structure.
+            ordered += mol
+            # The position of molecule is reset 
+            mol.set_positions(original)
 
 # If n>1, MA's are written now.
 
