@@ -1,0 +1,485 @@
+
+#######################################################################
+#
+#                 Cambridge Crystallographic Data Centre
+#                                CCDC
+#
+#######################################################################
+#
+# If this CIF has been generated from an entry in the Cambridge
+# Structural Database, then it will include bibliographic, chemical,
+# crystal, experimental, refinement or atomic coordinate data resulting
+# from the CCDC's data processing and validation procedures.
+#
+#######################################################################
+
+data_CSD_CIF_CAKBUL
+_audit_creation_date 2000-01-21
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD CAKBUL
+_database_code_depnum_ccdc_archive 'CCDC 1119707'
+_chemical_formula_sum 'C3 H12 Cl4 N2 Pb1'
+_chemical_formula_moiety
+;
+(C3 H12 N2 2+)n,n(Cl4 Pb1 2-)
+;
+_journal_coden_Cambridge 9
+_journal_volume 38
+_journal_year 1999
+_journal_page_first 716
+_journal_name_full 'Inorg.Chem. '
+loop_
+_publ_author_name
+"A.B.Corradi"
+"A.M.Ferrari"
+"G.C.Pellacani"
+"A.Saccani"
+"F.Sandrolini"
+"P.Sgarabotto"
+_chemical_name_systematic
+;
+catena-((Propane-1,3-diammonium) bis(\m~2~-chloro)-dichloro-lead(ii))
+;
+_cell_volume   1147.156
+_exptl_crystal_colour 'colorless'
+_exptl_crystal_density_diffrn 2.46
+_exptl_crystal_description 'prisms'
+_diffrn_ambient_temperature ?
+_diffrn_special_details
+;
+The study was carried out at room temperature,in the range 283-303K
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.039
+_refine_ls_wR_factor_gt 0.039
+_symmetry_cell_setting orthorhombic
+_symmetry_space_group_name_H-M 'P 21 21 21'
+_symmetry_Int_Tables_number 19
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 1/2-x,-y,1/2+z
+3 1/2+x,1/2-y,-z
+4 -x,1/2+y,1/2-z
+_cell_length_a 19.247(4)
+_cell_length_b 7.862(2)
+_cell_length_c 7.581(2)
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+Cl 0.99
+N 0.68
+Pb 1.54
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Pb1 Pb 0.00160 0.3157(1) 0.0006(2)
+Cl1 Cl 0.0230(3) 0.5018(7) -0.3174(8)
+Cl2 Cl 0.1489(3) 0.2472(9) 0.0308(10)
+Cl3 Cl -0.1419(3) 0.3838(8) -0.0292(11)
+Cl4 Cl 0.0249(4) 0.6284(8) 0.1807(9)
+N1 N 0.1345(10) 0.2894(22) 0.4542(30)
+N2 N 0.3672(9) 0.1454(23) 0.4535(30)
+C1 C 0.1958(12) 0.3813(38) 0.5534(46)
+C2 C 0.2667(11) 0.3103(50) 0.4455(48)
+C3 C 0.2972(18) 0.2052(51) 0.5357(41)
+Cl1C Cl -0.0230(3) 0.0018(7) -0.1826(8)
+Cl4C Cl -0.0249(4) 0.1284(8) 0.3193(9)
+Pb1C Pb -0.00160 0.8157(1) -0.5006(2)
+Pb1C* Pb -0.00160 0.8157(1) 0.4994(2)
+#END
+
+data_CSD_CIF_CAKDIB
+_audit_creation_date 2000-01-21
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD CAKDIB
+_database_code_depnum_ccdc_archive 'CCDC 1119722'
+_chemical_formula_sum 'C12 H52 Br14 N8 O2 Pb3'
+_chemical_formula_moiety
+;
+(C3 H12 N2 2+)4n,n(Br14 Pb3 8-),2n(H2 O1)
+;
+_journal_coden_Cambridge 9
+_journal_volume 38
+_journal_year 1999
+_journal_page_first 716
+_journal_name_full 'Inorg.Chem. '
+loop_
+_publ_author_name
+"A.B.Corradi"
+"A.M.Ferrari"
+"G.C.Pellacani"
+"A.Saccani"
+"F.Sandrolini"
+"P.Sgarabotto"
+_chemical_name_systematic
+;
+catena-(tetrakis(Propane-1,3-diammonium) 
+tetrakis(\m~2~-bromo)-decabromo-tri-lead(ii) dihydrate)
+;
+_cell_volume   1196.358
+_exptl_crystal_colour 'pale yellow'
+_exptl_crystal_density_diffrn 2.89
+_exptl_crystal_description 'prisms'
+_diffrn_ambient_temperature ?
+_diffrn_special_details
+;
+The study was carried out at room temperature,in the range 283-303K
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.049
+_refine_ls_wR_factor_gt 0.049
+_symmetry_cell_setting triclinic
+_symmetry_space_group_name_H-M 'P -1'
+_symmetry_Int_Tables_number 2
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,-y,-z
+_cell_length_a 11.517(3)
+_cell_length_b 14.122(3)
+_cell_length_c 8.149(2)
+_cell_angle_alpha 104.1(1)
+_cell_angle_beta 109.8(1)
+_cell_angle_gamma 77.5
+_cell_formula_units_Z 1
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+Br 1.21
+N 0.68
+O 0.68
+Pb 1.64
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Pb1 Pb 0.00000 0.00000 0.00000
+Pb2 Pb 0.2144(1) -0.28450 -0.533(1)
+Br1 Br 0.1386(2) -0.1659(1) -0.2026(30)
+Br2 Br -0.0718(2) 0.1102(2) -0.2954(30)
+Br3 Br -0.2400(2) -0.0828(2) -0.1839(30)
+Br4 Br 0.3366(2) -0.4540(1) -0.3463(30)
+Br5 Br 0.4328(2) -0.1856(2) -0.4037(30)
+Br6 Br -0.0554(2) -0.3587(1) -0.6585(30)
+Br7 Br 0.2905(2) -0.3866(1) -0.8441(30)
+N1 N -0.0592(15) 0.3940(12) 0.226(19)
+N2 N 0.3773(16) 0.3862(13) 0.268(26)
+C1 C 0.0356(22) 0.3523(17) 0.133(30)
+C2 C 0.1586(22) 0.3815(17) 0.245(30)
+C3 C 0.2589(22) 0.3500(18) 0.155(32)
+N3 N 0.1594(19) 0.1115(14) 0.548(25)
+N4 N 0.6023(20) 0.1658(16) 0.838(30)
+C4 C 0.2755(25) 0.0840(19) 0.708(39)
+C5 C 0.3785(26) 0.1387(24) 0.70(4)
+C6 C 0.4990(27) 0.1188(18) 0.850(36)
+O1 O 0.4488(22) 0.3695(12) 0.937(26)
+Br1A Br -0.1386(2) 0.1659(1) 0.2026(30)
+Br2A Br 0.0718(2) -0.1102(2) 0.2954(30)
+Br3A Br 0.2400(2) 0.0828(2) 0.1839(30)
+Br2A* Br 0.0718(2) -0.1102(2) -0.7046(30)
+Pb2A Pb -0.2144(1) 0.28450 -0.467(1)
+Pb2A* Pb -0.2144(1) 0.28450 0.533(1)
+Pb2* Pb 0.2144(1) -0.28450 0.467(1)
+Br1A* Br -0.1386(2) 0.1659(1) -0.7974(30)
+Br4A Br -0.3366(2) 0.4540(1) -0.6537(30)
+Br5A Br -0.4328(2) 0.1856(2) -0.5963(30)
+Br6A Br 0.0554(2) 0.3587(1) -0.3415(30)
+Br7A Br -0.2905(2) 0.3866(1) -0.1559(30)
+#END
+
+data_CSD_CIF_DIWJIC
+_audit_creation_date 1986-11-20
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD DIWJIC
+_database_code_depnum_ccdc_archive 'CCDC 1141996'
+_chemical_formula_sum 'C3 H12 Cl6 N2 Sn1'
+_chemical_formula_moiety
+;
+C3 H12 N2 2+,Cl6 Sn1 2-
+;
+_journal_coden_Cambridge 644
+_journal_volume 40
+_journal_year 1985
+_journal_page_first 1691
+_journal_name_full 'Z.Naturforsch.,B:Chem.Sci. '
+loop_
+_publ_author_name
+"W.Abriel"
+"C.Friedrich"
+_chemical_name_systematic
+;
+1,3-Diammonium-propyl hexachloro-tin(iv)
+;
+_cell_volume   1288.451
+_exptl_crystal_colour 'colorless'
+_diffrn_ambient_temperature ?
+_diffrn_special_details
+;
+The study was carried out at room temperature,in the range 283-303K
+
+;
+_refine_special_details
+;
+Disorder of cation.
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.029
+_refine_ls_wR_factor_gt 0.029
+_symmetry_cell_setting orthorhombic
+_symmetry_space_group_name_H-M 'P n m a'
+_symmetry_Int_Tables_number 62
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 1/2-x,-y,1/2+z
+3 1/2+x,1/2-y,1/2-z
+4 -x,1/2+y,-z
+5 -x,-y,-z
+6 -1/2+x,y,-1/2-z
+7 -1/2-x,-1/2+y,-1/2+z
+8 x,-1/2-y,z
+_cell_length_a 17.6082(9)
+_cell_length_b 7.1809(3)
+_cell_length_c 10.190(1)
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+Cl 0.99
+Sn 1.46
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Sn1 Sn 0.85342(4) 0.25000 0.33589(6)
+Cl1 Cl 0.9877(2) 0.25000 0.2787(3)
+Cl2 Cl 0.7203(2) 0.25000 0.3888(3)
+Cl3 Cl 0.8776(1) 0.4903(2) 0.5006(2)
+Cl4 Cl 0.8310(1) 0.4943(2) 0.1768(2)
+Cl3G Cl 0.8776(1) 0.0097(2) 0.5006(2)
+Cl4G Cl 0.8310(1) 0.0057(2) 0.1768(2)
+#END
+
+data_CSD_CIF_DIWJIC01
+_audit_creation_date 2018-11-26
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD DIWJIC01
+_database_code_depnum_ccdc_archive 'CCDC 1881320'
+_chemical_formula_sum 'C3 H12 Cl6 N2 Sn1'
+_chemical_formula_moiety
+;
+C3 H12 N2 2+,Cl6 Sn1 2-
+;
+_journal_coden_Cambridge 119
+_journal_volume 1177
+_journal_year 2018
+_journal_page_first 55
+_journal_name_full 'J.Mol.Struct. '
+loop_
+_publ_author_name
+"A.Ouasri"
+"M.S.D.Elyoubi"
+"A.Rhandour"
+"I.Georgieva"
+"Ts Zahariev"
+"N.Trendafilova"
+"P.Roussel"
+_chemical_name_systematic
+;
+propane-1,3-diammonium hexachloro-tin(iv)
+;
+_cell_volume   1280.046
+_exptl_crystal_density_diffrn 2.114
+_diffrn_ambient_temperature ?
+_diffrn_special_details
+;
+The study was carried out at room temperature,in the range 283-303K
+
+;
+_refine_special_details
+;
+C2 disordered by symmetry over two configurations with occupancy 0.5.
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0289
+_refine_ls_wR_factor_gt 0.0289
+_symmetry_cell_setting orthorhombic
+_symmetry_space_group_name_H-M 'P n m a'
+_symmetry_Int_Tables_number 62
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,1/2+y,-z
+3 1/2-x,-y,1/2+z
+4 1/2+x,1/2-y,1/2-z
+5 -x,-y,-z
+6 x,-1/2-y,z
+7 -1/2+x,y,-1/2-z
+8 -1/2-x,-1/2+y,-1/2+z
+_cell_length_a 17.578(2)
+_cell_length_b 7.166(1)
+_cell_length_c 10.162(1)
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+Cl 0.99
+N 0.68
+Sn 1.39
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Sn1 Sn 0.14658(2) 0.25000 0.66398(4)
+Cl1 Cl 0.12247(6) 0.00971(13) 0.4997(1)
+Cl2 Cl 0.16892(6) 0.49430(14) 0.82351(10)
+Cl3 Cl 0.27978(9) 0.25000 0.61081(17)
+Cl4 Cl 0.01242(9) 0.25000 0.72073(19)
+N1 N 0.2761(3) -0.25000 0.5991(5)
+N2 N 0.5032(3) -0.25000 0.8117(5)
+C1 C 0.3461(4) -0.25000 0.6755(7)
+C2 C 0.4143(4) -0.3175(12) 0.6252(8)
+C3 C 0.4897(4) -0.25000 0.6669(7)
+Cl1E Cl 0.12247(6) 0.49029(13) 0.4997(1)
+Cl2E Cl 0.16892(6) 0.00570(14) 0.82351(10)
+C2E C 0.4143(4) -0.1825(12) 0.6252(8)
+#END
+
+data_CSD_CIF_FUQKEK
+_audit_creation_date 2020-08-06
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD FUQKEK
+_database_code_depnum_ccdc_archive 'CCDC 2021720'
+_chemical_formula_sum 'C3 H12 Br6 N2 Pb2'
+_chemical_formula_moiety
+;
+C3 H12 N2 2+,(Br6 Pb2 2-)n
+;
+_journal_coden_Cambridge 179
+_journal_volume 59
+_journal_year 2020
+_journal_page_first 19087
+_journal_name_full 'Angew.Chem.,Int.Ed. '
+loop_
+_publ_author_name
+"D.Umeyama"
+"L.Leppert"
+"B.A.Connor"
+"M.A.Manumpil"
+"J.B.Neaton"
+"H.I.Karunadasa"
+_chemical_name_systematic
+;
+catena-(propane-1,3-diammonium hexakis(\m-bromo)-di-lead)
+;
+_cell_volume   1651.430
+_exptl_crystal_colour 'colorless'
+_exptl_crystal_density_diffrn 3.901
+_exptl_crystal_description 'needle'
+_diffrn_ambient_temperature 296.1
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0338
+_refine_ls_wR_factor_gt 0.0338
+_symmetry_cell_setting orthorhombic
+_symmetry_space_group_name_H-M 'P n m a'
+_symmetry_Int_Tables_number 62
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 1/2-x,-y,1/2+z
+3 -x,1/2+y,-z
+4 1/2+x,1/2-y,1/2-z
+5 -x,-y,-z
+6 -1/2+x,y,-1/2-z
+7 x,-1/2-y,z
+8 -1/2-x,-1/2+y,-1/2+z
+_cell_length_a 15.693(1)
+_cell_length_b 12.0388(8)
+_cell_length_c 8.7412(5)
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.23
+Br 1.21
+N 0.68
+Pb 1.46
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Pb1 Pb 0.36475(2) 0.50018(3) 0.57358(3)
+Br1 Br 0.35832(11) 0.25000 0.58041(19)
+Br2 Br 0.34941(11) 0.75000 0.5341(2)
+Br3 Br 0.45833(7) 0.49091(11) 0.28377(12)
+Br4 Br 0.20413(8) 0.47717(12) 0.39962(15)
+N1 N 0.3625(10) 0.25000 0.1586(18)
+C1 C 0.4016(14) 0.25000 0.019(2)
+H1 H 0.38260 0.31493 -0.03683
+C2 C 0.5448(17) 0.25000 -0.111(3)
+H2 H 0.52667 0.18536 -0.16836
+N2 N 0.6308(10) 0.25000 -0.112(2)
+C3 C 0.4999(16) 0.25000 0.021(3)
+H3 H 0.51780 0.31469 0.07924
+H4? H 0.38260 0.31493 -0.03683
+H5? H 0.52667 0.18536 -0.16836
+H6? H 0.51780 0.31469 0.07924
+H7? H 0.36203 0.31870 0.19620
+H8? H 0.39068 0.20545 0.22214
+H9? H 0.30918 0.22585 0.14834
+H10? H 0.64967 0.31965 -0.11517
+H11? H 0.64943 0.21301 -0.19310
+H12? H 0.64995 0.21733 -0.02694
+Pb1D Pb 0.63525(2) 0.49982(3) 0.42642(3)
+Br3D Br 0.54167(7) 0.50909(11) 0.71623(12)
+Br4D Br 0.79587(8) 0.52283(12) 0.60038(15)
+Pb1A Pb 0.13525(2) 0.49982(3) 0.07358(3)
+Pb1E Pb 0.86475(2) 0.50018(3) 0.92642(3)
+Pb1F Pb 0.36475(2) -0.00018(3) 0.57358(3)
+Pb1F* Pb 0.36475(2) 0.99982(3) 0.57358(3)
+Br1B Br 0.64168(11) 0.75000 0.41959(19)
+Br2B Br 0.65059(11) 0.25000 0.4659(2)
+Br4A Br 0.29587(8) 0.52283(12) 0.89962(15)
+Br4E Br 0.70413(8) 0.47717(12) 0.10038(15)
+H1F H 0.38260 0.18507 -0.03683
+H2F H 0.52667 0.31464 -0.16836
+H3F H 0.51780 0.18531 0.07924
+#END

@@ -1,0 +1,631 @@
+
+#######################################################################
+#
+#                 Cambridge Crystallographic Data Centre
+#                                CCDC
+#
+#######################################################################
+#
+# If this CIF has been generated from an entry in the Cambridge
+# Structural Database, then it will include bibliographic, chemical,
+# crystal, experimental, refinement or atomic coordinate data resulting
+# from the CCDC's data processing and validation procedures.
+#
+#######################################################################
+
+data_CSD_CIF_DIMMOE
+_audit_creation_date 2018-11-26
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD DIMMOE
+_database_code_depnum_ccdc_archive 'CCDC 1881321'
+_chemical_formula_sum 'C4 H14 Cl6 N2 Sn1'
+_chemical_formula_moiety
+;
+C4 H14 N2 2+,Cl6 Sn1 2-
+;
+_journal_coden_Cambridge 119
+_journal_volume 1177
+_journal_year 2018
+_journal_page_first 55
+_journal_name_full 'J.Mol.Struct. '
+loop_
+_publ_author_name
+"A.Ouasri"
+"M.S.D.Elyoubi"
+"A.Rhandour"
+"I.Georgieva"
+"Ts Zahariev"
+"N.Trendafilova"
+"P.Roussel"
+_chemical_name_systematic
+;
+butane-1,4-diammonium hexachloro-tin(iv)
+;
+_cell_volume    703.740
+_exptl_crystal_density_diffrn 1.989
+_diffrn_ambient_temperature 293
+_refine_special_details
+;
+C2 disordered by symmetry over two configurations with occupancy 0.5.
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0293
+_refine_ls_wR_factor_gt 0.0293
+_symmetry_cell_setting monoclinic
+_symmetry_space_group_name_H-M 'C 2/m'
+_symmetry_Int_Tables_number 12
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,y,-z
+3 1/2+x,1/2+y,z
+4 1/2-x,1/2+y,-z
+5 -x,-y,-z
+6 x,-y,z
+7 -1/2-x,-1/2-y,-z
+8 -1/2+x,-1/2-y,z
+_cell_length_a 11.942(3)
+_cell_length_b 7.0840(18)
+_cell_length_c 10.237(3)
+_cell_angle_alpha 90
+_cell_angle_beta 125.648
+_cell_angle_gamma 90
+_cell_formula_units_Z 2
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+Cl 0.99
+N 0.68
+Sn 1.39
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Sn1 Sn 0.00000 0.00000 0.00000
+Cl1 Cl -0.23884(15) 0.00000 -0.2327(2)
+Cl2 Cl 0.04967(11) -0.24591(16) -0.12507(14)
+N1 N 0.2466(6) 0.50000 0.2116(7)
+C1 C 0.2992(7) 0.50000 0.3857(8)
+C2 C 0.4524(10) 0.4245(15) 0.4942(12)
+Cl1A Cl 0.23884(15) 0.00000 0.2327(2)
+Cl2A Cl -0.04967(11) -0.24591(16) 0.12507(14)
+Cl2D Cl -0.04967(11) 0.24591(16) 0.12507(14)
+Cl2E Cl 0.04967(11) 0.24591(16) -0.12507(14)
+N1A N 0.7534(6) 0.50000 0.7884(7)
+C1A C 0.7008(7) 0.50000 0.6143(8)
+C2A C 0.5476(10) 0.4245(15) 0.5058(12)
+C2D C 0.5476(10) 0.5755(15) 0.5058(12)
+C2E C 0.4524(10) 0.5755(15) 0.4942(12)
+#END
+
+data_CSD_CIF_LASDUG
+_audit_creation_date 2012-05-09
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD LASDUG
+_database_code_depnum_ccdc_archive 'CCDC 853206'
+_chemical_formula_sum 'C8 H28 Br8 N4 Pb2'
+_chemical_formula_moiety
+;
+(C4 H14 N2 2+)2n,n(Br8 Pb2 4-)
+;
+_journal_coden_Cambridge 1350
+_journal_volume 14
+_journal_year 2012
+_journal_page_first 1954
+_journal_name_full 'CrystEngComm '
+loop_
+_publ_author_name
+"A.Lemmerer"
+"D.G.Billing"
+_chemical_name_systematic
+;
+catena-[bis(1,4-Diammoniobutane) tetrakis(\m~2~-bromo)-tetrabromo-di-lead(ii)]
+;
+_cell_volume    655.721
+_exptl_crystal_colour 'colorless'
+_exptl_crystal_density_diffrn 3.125
+_exptl_crystal_description 'polyhedral'
+_diffrn_ambient_temperature 173
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0346
+_refine_ls_wR_factor_gt 0.0346
+_symmetry_cell_setting triclinic
+_symmetry_space_group_name_H-M 'P -1'
+_symmetry_Int_Tables_number 2
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,-y,-z
+_cell_length_a 8.0070(18)
+_cell_length_b 8.389(2)
+_cell_length_c 10.586(3)
+_cell_angle_alpha 78.572(7)
+_cell_angle_beta 70.445(7)
+_cell_angle_gamma 89.192(7)
+_cell_formula_units_Z 1
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.23
+Br 1.21
+N 0.68
+Pb 1.46
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+C1 C 0.7561(13) 0.4498(11) 0.3799(9)
+H1 H 0.64780 0.46330 0.35440
+H2 H 0.75080 0.52110 0.44520
+C2 C 0.7599(13) 0.2753(10) 0.4486(9)
+H3 H 0.85740 0.26490 0.48710
+H4 H 0.78350 0.20550 0.38000
+C3 C 0.5863(13) 0.2179(11) 0.5617(9)
+H5 H 0.48920 0.24070 0.52350
+H6 H 0.56940 0.28340 0.63270
+C4 C 0.5680(14) 0.0401(11) 0.6299(10)
+H7 H 0.44050 0.00430 0.66900
+H8 H 0.62660 -0.02440 0.55990
+N1 N 0.9152(11) 0.5009(12) 0.2549(9)
+H9 H 0.91850 0.61060 0.22470
+H10 H 0.90940 0.44940 0.18840
+H11 H 1.01510 0.47410 0.27540
+N2 N 0.6476(11) 0.0057(11) 0.7413(9)
+H12 H 0.65610 -0.10360 0.76550
+H13 H 0.57740 0.04340 0.81530
+H14 H 0.75770 0.05650 0.71070
+Br1 Br 0.29789(14) 0.38929(13) 0.29666(10)
+Br2 Br 0.32898(14) 0.20972(13) -0.05019(11)
+Br3 Br 0.21666(14) 0.71099(13) -0.05594(11)
+Br4 Br -0.06312(14) -0.11451(13) 0.29945(10)
+Pb1 Pb 0.50000 0.50000 0.00000
+Pb2 Pb 0.00000 0.00000 0.00000
+Br1A Br 0.70211(14) 0.61071(13) -0.29666(10)
+Br2A Br 0.67102(14) 0.79028(13) 0.05019(11)
+Br2A* Br -0.32898(14) -0.20972(13) 0.05019(11)
+Br3A Br 0.78334(14) 0.28901(13) 0.05594(11)
+Br3* Br 0.21666(14) -0.28901(13) -0.05594(11)
+Br3A* Br -0.21666(14) 0.28901(13) 0.05594(11)
+Br4A Br 0.06312(14) 0.11451(13) -0.29945(10)
+Pb2* Pb 0.00000 1.00000 0.00000
+Pb2** Pb 1.00000 1.00000 0.00000
+Pb2*** Pb 1.00000 0.00000 0.00000
+#END
+
+data_CSD_CIF_LASDUG01
+_audit_creation_date 2017-05-03
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD LASDUG01
+_database_code_depnum_ccdc_archive 'CCDC 1521053'
+_chemical_formula_sum 'C8 H28 Br8 N4 Pb2'
+_chemical_formula_moiety
+;
+2(C4 H14 N2 2+),(Br8 Pb2 4-)n
+;
+_journal_coden_Cambridge 1475
+_journal_volume 8
+_journal_year 2017
+_journal_page_first 4497
+_journal_name_full 'Chemical Science '
+loop_
+_publ_author_name
+"M.D.Smith"
+"A.Jaffe"
+"E.R.Dohner"
+"A.M.Lindenberg"
+"H.I.Karunadasa"
+_chemical_name_systematic
+;
+catena-(bis(butane-1,4-diaminium) tetrakis(\m-bromo)-tetrabromo-di-lead(ii))
+;
+_cell_volume    665.470
+_exptl_crystal_colour 'colorless'
+_exptl_crystal_density_diffrn 3.079
+_exptl_special_details
+;
+, Luminescent
+
+;
+_exptl_crystal_description 'octahedral'
+_exptl_crystal_preparation 'vapor diffusion into HBr'
+_diffrn_ambient_temperature 296.1
+_diffrn_special_details
+;
+twin
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0378
+_refine_ls_wR_factor_gt 0.0378
+_symmetry_cell_setting triclinic
+_symmetry_space_group_name_H-M 'P -1'
+_symmetry_Int_Tables_number 2
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,-y,-z
+_cell_length_a 8.0135(4)
+_cell_length_b 8.4270(4)
+_cell_length_c 10.7367(5)
+_cell_angle_alpha 78.957(2)
+_cell_angle_beta 69.565(2)
+_cell_angle_gamma 89.542(1)
+_cell_formula_units_Z 1
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.23
+Br 1.21
+N 0.68
+Pb 1.46
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Pb1 Pb 0.50000 0.00000 0.50000
+Pb2 Pb 0.00000 0.50000 0.50000
+Br1 Br 0.32890(12) 0.71155(12) 0.44981(10)
+Br2 Br 0.21865(12) 0.21190(12) 0.44638(10)
+Br3 Br 0.70893(13) 0.10775(13) 0.20558(10)
+Br4 Br -0.06859(13) 0.38899(12) 0.79598(10)
+N1 N 1.3498(11) 0.4974(11) -0.2420(9)
+H1 H 1.42160 0.45410 -0.30920
+H2 H 1.35470 0.60440 -0.26930
+H3 H 1.23840 0.45710 -0.21880
+N2 N 1.0927(11) -0.0011(10) 0.2450(9)
+H4 H 0.99310 0.02200 0.22830
+H5 H 1.10000 0.05160 0.30750
+H6 H 1.09120 -0.10730 0.27540
+C1 C 1.2477(14) 0.0489(12) 0.1197(11)
+H7 H 1.24930 -0.01970 0.05630
+H8 H 1.35650 0.03580 0.13990
+C2 C 1.4069(17) 0.4589(12) -0.1251(11)
+H9 H 1.33410 0.51430 -0.05550
+H10 H 1.52950 0.50080 -0.15240
+C3 C 1.2402(15) 0.2246(12) 0.0556(12)
+H11 H 1.13370 0.23570 0.03210
+H12 H 1.23110 0.29150 0.12160
+C4 C 1.395(2) 0.2833(13) -0.0652(11)
+H13 H 1.39590 0.22290 -0.13380
+H14 H 1.50130 0.25930 -0.04330
+Br1A Br -0.32890(12) 0.28845(12) 0.55019(10)
+Br2A Br -0.21865(12) 0.78810(12) 0.55362(10)
+Br4A Br 0.06859(13) 0.61101(12) 0.20402(10)
+Br3A Br 0.29107(13) -0.10775(13) 0.79442(10)
+Pb1* Pb -0.50000 0.00000 0.50000
+Pb1** Pb -0.50000 1.00000 0.50000
+Pb1*** Pb 0.50000 1.00000 0.50000
+Br1* Br 0.32890(12) -0.28845(12) 0.44981(10)
+Br1A* Br 0.67110(12) 0.28845(12) 0.55019(10)
+Br2A* Br 0.78135(12) -0.21190(12) 0.55362(10)
+#END
+
+data_CSD_CIF_LASFAO
+_audit_creation_date 2012-05-08
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD LASFAO
+_database_code_depnum_ccdc_archive 'CCDC 853207'
+_chemical_formula_sum 'C4 H14 I4 N2 Pb1'
+_chemical_formula_moiety
+;
+(C4 H14 N2 2+)n,n(I4 Pb1 2-)
+;
+_journal_coden_Cambridge 1350
+_journal_volume 14
+_journal_year 2012
+_journal_page_first 1954
+_journal_name_full 'CrystEngComm '
+loop_
+_publ_author_name
+"A.Lemmerer"
+"D.G.Billing"
+_chemical_name_systematic
+;
+catena-[1,4-Diammoniobutane bis(\m~2~-iodo)-bis(iodo)-lead(ii)]
+;
+_cell_volume   1551.753
+_exptl_crystal_colour 'orange'
+_exptl_crystal_density_diffrn 3.446
+_exptl_special_details
+;
+monoclinic C2/c polymorph
+
+;
+_exptl_crystal_description 'chunk'
+_diffrn_ambient_temperature 293
+_refine_special_details
+;
+C2B and C2A disordered over two sites with occupancies 0.59:0.41; 
+H1F,H1G,H2B1,H2B2 and H1D,H1E,H2A1,H2A2 disordered over two sites with 
+occupancies 0.59:0.41.
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0394
+_refine_ls_wR_factor_gt 0.0394
+_symmetry_cell_setting monoclinic
+_symmetry_space_group_name_H-M 'C 2/c'
+_symmetry_Int_Tables_number 15
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,y,1/2-z
+3 1/2+x,1/2+y,z
+4 1/2-x,1/2+y,1/2-z
+5 -x,-y,-z
+6 x,-y,-1/2+z
+7 -1/2-x,-1/2-y,-z
+8 -1/2+x,-1/2-y,-1/2+z
+_cell_length_a 21.119(4)
+_cell_length_b 8.5018(14)
+_cell_length_c 8.8936(15)
+_cell_angle_alpha 90
+_cell_angle_beta 103.648(3)
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.18
+I 1.40
+N 0.68
+Pb 1.46
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+C1 C 0.0606(5) 0.3287(15) 0.9478(10)
+H1 H 0.07300 0.43870 0.95090
+H2 H 0.03070 0.31360 1.01430
+N1 N 0.1175(4) 0.2298(11) 0.9969(11)
+H3 H 0.13270 0.23860 1.09880
+H4 H 0.14800 0.25970 0.94910
+H5 H 0.10670 0.13010 0.97310
+C2 C 0.0299(8) 0.387(3) 0.7824(16)
+H6 H 0.06110 0.38110 0.71820
+H7 H 0.01550 0.49550 0.78430
+I1 I 0.40210(2) 0.32359(7) 0.61154(6)
+I2 I 0.22208(3) 0.55957(7) 0.28897(6)
+Pb1 Pb 0.25000 0.25000 0.50000
+C3? C 0.0287(7) 0.278(2) 0.7801(15)
+H8? H 0.05990 0.28540 0.71610
+H9? H 0.01400 0.16930 0.77870
+H10? H 0.06980 0.42280 1.01080
+H11? H 0.02580 0.27470 0.98120
+C1A C -0.0606(5) 0.3287(15) 0.5522(10)
+H1A H -0.07300 0.43870 0.54910
+H2A H -0.03070 0.31360 0.48570
+N1A N -0.1175(4) 0.2298(11) 0.5031(11)
+H3A H -0.13270 0.23860 0.40120
+H4A H -0.14800 0.25970 0.55090
+H5A H -0.10670 0.13010 0.52690
+C2A C -0.0299(8) 0.387(3) 0.7176(16)
+H6A H -0.06110 0.38110 0.78180
+H7A H -0.01550 0.49550 0.71570
+I1F I 0.09790(2) 0.17641(7) 0.38846(6)
+I2C I 0.27792(3) 0.05957(7) 0.21103(6)
+I2E I 0.22208(3) 0.44043(7) 0.78897(6)
+I2F I 0.27792(3) -0.05957(7) 0.71103(6)
+Pb1C Pb 0.25000 0.75000 0.00000
+Pb1C* Pb 0.25000 -0.25000 0.00000
+#END
+
+data_CSD_CIF_LASFAO01
+_audit_creation_date 2015-07-08
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD LASFAO01
+_database_code_depnum_ccdc_archive 'CCDC 1053651'
+_chemical_formula_sum 'C8 H28 I8 N4 Pb2'
+_chemical_formula_moiety
+;
+(C4 H14 N2 2+)2n,n(I8 Pb2 4-)
+;
+_journal_coden_Cambridge 208
+_journal_volume 230
+_journal_year 2015
+_journal_page_first 143
+_journal_name_full 'J.Solid State Chem. '
+loop_
+_publ_author_name
+"Kecai Xiong"
+"Wei Liu"
+"S.J.Teat"
+"Litao An"
+"Hao Wang"
+"T.J.Emge"
+"Jing Li"
+_chemical_name_systematic
+;
+catena-[bis(butane-1,4-diaminium) tetrakis(\m-iodo)-tetraiodo-di-lead]
+;
+_cell_volume    752.998
+_exptl_crystal_colour 'yellow orange'
+_exptl_crystal_density_diffrn 3.55
+_exptl_special_details
+;
+triclinic P-1 polymorph
+
+;
+_exptl_crystal_description 'rod'
+_diffrn_ambient_temperature 100
+_diffrn_radiation_probe x-ray
+_diffrn_source synchrotron
+_diffrn_special_details
+;
+twin
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.0295
+_refine_ls_wR_factor_gt 0.0295
+_symmetry_cell_setting triclinic
+_symmetry_space_group_name_H-M 'P -1'
+_symmetry_Int_Tables_number 2
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,-y,-z
+_cell_length_a 8.4812(4)
+_cell_length_b 8.7940(4)
+_cell_length_c 11.0562(5)
+_cell_angle_alpha 76.645(2)
+_cell_angle_beta 70.204(2)
+_cell_angle_gamma 89.238(2)
+_cell_formula_units_Z 1
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+H 0.23
+I 1.40
+N 0.68
+Pb 1.46
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Pb1 Pb 0.00000 0.50000 1.00000
+Pb2 Pb 0.50000 1.00000 1.00000
+I1 I 0.21537(3) 0.21048(3) 0.93992(2)
+I2 I 0.06535(3) 0.61473(3) 0.69066(2)
+I3 I 0.33470(3) 0.70797(3) 0.94611(2)
+I4 I 0.71024(3) 1.11279(3) 0.69405(2)
+N1 N 0.3536(4) 0.4881(4) 0.2728(4)
+C1 C 0.4336(5) 0.4540(4) 0.3766(4)
+H1 H 0.38030 0.51340 0.44410
+H2 H 0.55400 0.49040 0.33540
+C2 C 0.4180(4) 0.2806(5) 0.4444(4)
+H3 H 0.50680 0.25950 0.48420
+H4 H 0.43830 0.21930 0.37650
+C3 C 0.2482(5) 0.2231(4) 0.5518(4)
+H5 H 0.22180 0.28910 0.61660
+H6 H 0.15940 0.23200 0.51160
+C4 C 0.2520(4) 0.0539(4) 0.6218(4)
+H7 H 0.26540 -0.01300 0.55870
+H8 H 0.35020 0.04350 0.65160
+N2 N 0.0961(4) -0.0015(4) 0.7382(4)
+H9 H 0.095(5) 0.046(4) 0.803(3)
+H10 H 0.094(5) -0.1071(14) 0.768(4)
+H11 H 0.005(3) 0.023(5) 0.714(4)
+H12 H 0.246(2) 0.445(4) 0.304(4)
+H13 H 0.410(5) 0.451(5) 0.201(2)
+H14 H 0.348(5) 0.5930(16) 0.242(4)
+I1A I -0.21537(3) 0.78952(3) 1.06008(2)
+I2A I -0.06535(3) 0.38527(3) 1.30934(2)
+I3A I -0.33470(3) 0.29203(3) 1.05389(2)
+I4A I 0.28976(3) 0.88721(3) 1.30595(2)
+Pb2* Pb -0.50000 0.00000 1.00000
+Pb2** Pb -0.50000 1.00000 1.00000
+Pb2*** Pb 0.50000 0.00000 1.00000
+I1* I 0.21537(3) 1.21048(3) 0.93992(2)
+I1A* I 0.78463(3) 0.78952(3) 1.06008(2)
+I3A* I 0.66530(3) 1.29203(3) 1.05389(2)
+#END
+
+data_CSD_CIF_YOVXAI
+_audit_creation_date 1996-04-12
+_audit_creation_method CSD-ConQuest-V1
+_database_code_CSD YOVXAI
+_chemical_formula_sum 'C4 H14 Cl4 N2 Pb1'
+_chemical_formula_moiety
+;
+(C4 H14 N2 2+)n,n(Cl4 Pb1 2-)
+;
+_journal_coden_Cambridge 633
+_journal_volume 143
+_journal_year 1994
+_journal_page_first 203
+_journal_name_full 'Phys.Status Solidi,A. '
+loop_
+_publ_author_name
+"C.Courseille"
+"N.B.Chanh"
+"Th.Maris"
+"A.Daoud"
+"Y.Abid"
+"M.Laguerre"
+_chemical_name_systematic
+;
+catena(1,4-Diammonio-butane tetrachloro-lead)
+;
+_cell_volume   1215.709
+_exptl_special_details
+;
+Powder diffraction at 353K sg P21/a, z=2, a=7.963(5), b=7.735(6), c= 
+11.011(1) and beta 102.22(9)
+phase transition at 323.8 K
+;
+_diffrn_ambient_temperature ?
+_diffrn_special_details
+;
+The study was carried out at room temperature,in the range 283-303K
+
+;
+#These two values have been output from a single CSD field.
+_refine_ls_R_factor_gt 0.082
+_refine_ls_wR_factor_gt 0.082
+_symmetry_cell_setting monoclinic
+_symmetry_space_group_name_H-M 'P 21/c'
+_symmetry_Int_Tables_number 14
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -x,1/2+y,1/2-z
+3 -x,-y,-z
+4 x,-1/2-y,-1/2+z
+_cell_length_a 7.944(2)
+_cell_length_b 7.772(5)
+_cell_length_c 19.761(8)
+_cell_angle_alpha 90
+_cell_angle_beta 94.84(3)
+_cell_angle_gamma 90
+_cell_formula_units_Z 4
+loop_
+_atom_type_symbol
+_atom_type_radius_bond
+C 0.68
+Cl 0.99
+N 0.68
+Pb 1.54
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Pb1 Pb -0.2613(1) 0.6599(1) 0.2519(1)
+Cl1 Cl -0.2566(8) 0.6856(9) 0.1090(3)
+Cl2 Cl -0.1916(8) 0.6864(9) 0.3993(3)
+Cl3 Cl -0.0482(8) 0.3563(8) 0.2485(3)
+Cl4 Cl -0.5824(8) 0.4847(8) 0.2485(3)
+N1 N 0.8662(23) 0.4135(25) -0.1252(9)
+C1 C 0.7455(40) 0.3014(39) -0.0920(14)
+C2 C 0.7734(31) 0.3025(45) -0.0163(12)
+C3 C 0.6485(30) 0.1920(37) 0.0161(12)
+C4 C 0.6564(32) 0.1961(34) 0.0899(13)
+N2 N 0.8056(27) 0.089(3) 0.1224(11)
+Cl3A Cl 0.0482(8) 0.8563(8) 0.2515(3)
+Cl4A Cl -0.4176(8) 0.9847(8) 0.2515(3)
+Pb1A Pb 0.2613(1) 0.1599(1) 0.2481(1)
+Pb1A* Pb -0.7387(1) 0.1599(1) 0.2481(1)
+#END
